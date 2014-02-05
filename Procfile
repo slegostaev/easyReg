@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/easyreg -Dhttp.port=$PORT $JAVA_OPTS -DapplyEvolutions.default=true
+web: target/universal/stage/bin/easyreg -Dhttp.port=$PORT -DapplyEvolutions.default=true
