@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                               controllers.Application.index()
+GET     /test                           controllers.Application.test()
+GET     /app/javascripts/routes   	controllers.Application.javascriptRoutes()
+
+#GET     /receptions/javascripts/routes   	controllers.ReceptionsController.javascriptRoutes()
+GET     /receptions/get_all             	controllers.ReceptionsController.getAllReceptions()
+POST	/receptions/save					controllers.ReceptionsController.saveReception()
+DELETE	/receptions/delete					controllers.ReceptionsController.deleteReception(id : Long)
+
+
+GET     /doctors/get_all             	controllers.Application.getAllDoctors()
+
+GET		/patient/find_by_name			controllers.Application.findPatientByName(mask : String ?= null)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
