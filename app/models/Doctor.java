@@ -8,9 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by km on 24.01.14.
@@ -36,19 +38,9 @@ public class Doctor extends User {
     	return Ebean.find(Doctor.class).findList();
     }
     
-//    @Transient
-//    public Long getKey() {
-//    	return id;
-//    }
-    
-//    @Transient
-//    public String getLabel() {
-//    	return getFullName();
-//    }
-    
-//    @JsonProperty(value = "doctor_id")
-//    @Transient
-//    public Long getDoctorId() {
-//    	return id;
-//    }
+    @JsonProperty(value = "label")
+    @Transient
+    public String getLabel() {
+    	return surname + " " + firstName;
+    }
 }

@@ -1,0 +1,14 @@
+@(headerType : String)
+<div class="header">
+	@headerType match {
+		case "scheduler" => {
+			<a href="@routes.SettingsController.index">Настройки</a>
+		}
+		
+		case "settings" => {
+			<a href="@routes.Application.index">Расписание</a>
+		}
+	
+	}
+	
+</div>

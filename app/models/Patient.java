@@ -21,6 +21,6 @@ public class Patient extends User {
     public List<Reception> receptions;
     
     public static List<Patient> findByName(String name) {
-    	return Ebean.find(Patient.class).where().icontains("last_name", name).findList();
+    	return Ebean.find(Patient.class).where().icontains("surname", name).findList();
     }
 }

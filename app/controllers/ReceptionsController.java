@@ -6,10 +6,15 @@ import models.Doctor;
 import models.Patient;
 import models.Reception;
 import play.Logger;
+import play.Routes;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+/**
+ * @author "SLegostaev"
+ *
+ */
 
 public class ReceptionsController extends Controller {
 	
@@ -62,12 +67,13 @@ public class ReceptionsController extends Controller {
         return ok(Json.toJson(Reception.findAll()));
     }
 	
-//	public static Result javascriptRoutes() {
-//        response().setContentType("text/javascript");
-//        return ok(Routes.javascriptRouter("jsRoutes",
-//                controllers.routes.javascript.ReceptionsController.getAllReceptions(),
-//                controllers.routes.javascript.ReceptionsController.addReception(),
-//                controllers.routes.javascript.ReceptionsController.updateReception(),
-//                controllers.routes.javascript.ReceptionsController.deleteReception()));
-//    }
+    public static Result javascriptRoutes() {
+        response().setContentType("text/javascript");
+        return ok(Routes.javascriptRouter("jsRoutes",
+        		controllers.routes.javascript.ReceptionsController.getAllReceptions(),
+                controllers.routes.javascript.ReceptionsController.saveReception(),
+                controllers.routes.javascript.ReceptionsController.deleteReception(),
+                controllers.routes.javascript.DoctorsController.getAllDoctorsJSON(),
+                controllers.routes.javascript.PatientsController.findPatientByName()));
+    }
 }

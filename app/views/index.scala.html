@@ -1,6 +1,4 @@
-@(message: String)
-
-@main("easyReg") {
+@scheduler_main {
 	<!--     <script src='@routes.Assets.at("javascripts/scheduler/connector/connector.js")' type="text/javascript"></script> -->
 
     <link rel="stylesheet" href='@routes.Assets.at("stylesheets/scheduler/dhtmlxscheduler.css")' type="text/css">
@@ -18,7 +16,7 @@
     <script src='@routes.Assets.at("javascripts/dhtmlx/common/dhtmlxCombo/dhtmlxcombo.js")' type="text/javascript"></script>
     <link rel="stylesheet" href='@routes.Assets.at("javascripts/dhtmlx/common/dhtmlxCombo/dhtmlxcombo.css")'>
     
-    <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+    <script type="text/javascript" src="@routes.ReceptionsController.javascriptRoutes()"></script>
 
     <style type="text/css" media="screen">
         html, body{
@@ -44,10 +42,20 @@
 			padding: 20px;
 			font-family: Tahoma;
 			font-size: 10pt;
+			style="width: 500px; 
+			height: 200px;"
 		}
 
 		#reception_form label {
 			width: 200px;
+		}
+		
+		#reception_form input, #reception_form select  {
+			width: 200px;
+		}
+		
+		.ui-autocomplete {
+			z-index: 11000 !important;
 		}
     </style>
     <script type="text/javascript">
@@ -120,7 +128,7 @@
 	  			return true;
 	  		});
     		
-        	jsRoutes.controllers.Application.getAllDoctors().ajax().done(function(doctors) {
+        	jsRoutes.controllers.DoctorsController.getAllDoctorsJSON().ajax().done(function(doctors) {
         		scheduler.createUnitsView({
             	    name : "unit",
             	    property : "doctor_id", 
@@ -148,7 +156,7 @@
         	scheduler.showLightbox = function(id) {
     			var ev = scheduler.getEvent(id);
     			scheduler.startLightbox(id, html("reception_form"));
-    			$("#patient_name").focus().val(ev.patient ? ev.patient.label : '');
+    			$("#patient_name").focus().val(ev.patient ? ev.patient.fullname : '');
     			$("#description").val(ev.text);
     			$("#doctor_name").text(getDoctorName());
     			$("#reception_time").text(getTime(ev.start_date) + '-' + getTime(ev.end_date));
@@ -156,10 +164,10 @@
     		
     		$('#patient_name').autocomplete({
     			source : function(req, resp) {
-    				jsRoutes.controllers.Application.findPatientByName(req.term)
+    				jsRoutes.controllers.PatientsController.findPatientByName(req.term)
     					.ajax().done(function(data) {
     						resp($.map(data, function(item) {
-    							return {id : item.key, label : item.label, value : item.label }
+    							return {id : item.key, label : item.fullname + ', ' + item.birthday, value : item.fullname }
     						}));
     					})
     			},
@@ -183,7 +191,7 @@
 				ev.doctor = {};
 			}
 			var patientField = $("#patient_name");
-			ev.patient.label = patientField.val();
+			ev.patient.fullname = patientField.val();
 			ev.patient.key = patientField.data('patient-id');
 			ev.doctor.key = doctor_id;
 			jsRoutes.controllers.ReceptionsController.saveReception().ajax({
@@ -247,17 +255,22 @@
 		}
     </script>
 	<div id="reception_form">
-		<label for="reception_time" style="padding-right: 10px;">Time:</label><span id="reception_time"></span><br>
-		<label for="doctor_name" style="padding-right: 10px;">Doctor:</label><span id="doctor_name"></span><br>
-		<label for="patient_name" style="padding-right: 10px;">Patient:</label><input type="text" name="patient_name" value="" id="patient_name" 
-			data-patinent-id=""><br>
-
-		<label for="description" style="padding-right: 10px;">Description</label>
-		<textarea name="description" id="description"></textarea><br>
+		<div class="header"></div>
+		<div class="content">
+			<label for="reception_time" style="padding-right: 10px;">Time:</label><span id="reception_time"></span><br>
+			<label for="doctor_name" style="padding-right: 10px;">Doctor:</label><span id="doctor_name"></span><br>
+			<label for="patient_name" style="padding-right: 10px;">Patient:</label><input type="text" name="patient_name" value="" id="patient_name" 
+				data-patinent-id=""><br>
+	
+			<label for="description" style="padding-right: 10px;">Description</label>
+			<textarea name="description" id="description"></textarea><br>
+		</div>
 		
-		<input type="button" name="save" value="Save" id="save" style='width:100px;' onclick="save_form()">
-		<input type="button" name="close" value="Close" id="close" style='width:100px;' onclick="close_form()">
-		<input type="button" name="delete" value="Delete" id="delete" style='width:100px;' onclick="delete_event()">
+		<div class="footer">
+			<input type="button" name="save" value="Save" id="save" style='width:100px;' onclick="save_form()">
+			<input type="button" name="close" value="Close" id="close" style='width:100px;' onclick="close_form()">
+			<input type="button" name="delete" value="Delete" id="delete" style='width:100px;' onclick="delete_event()">
+		</div>
 	</div>
 	
     <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>

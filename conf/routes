@@ -1,21 +1,28 @@
+
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
 # Home page
 GET     /                               controllers.Application.index()
-GET     /test                           controllers.Application.test()
-GET     /app/javascripts/routes   	controllers.Application.javascriptRoutes()
 
-#GET     /receptions/javascripts/routes   	controllers.ReceptionsController.javascriptRoutes()
-GET     /receptions/get_all             	controllers.ReceptionsController.getAllReceptions()
-POST	/receptions/save					controllers.ReceptionsController.saveReception()
-DELETE	/receptions/delete					controllers.ReceptionsController.deleteReception(id : Long)
+GET     /receptions/js/routes		   	controllers.ReceptionsController.javascriptRoutes()
+GET     /receptions/get_all             controllers.ReceptionsController.getAllReceptions()
+POST	/receptions/save				controllers.ReceptionsController.saveReception()
+DELETE	/receptions/delete				controllers.ReceptionsController.deleteReception(id : Long)
 
+#ajax that return json
+GET     /ajax/get_all_doctors           controllers.DoctorsController.getAllDoctorsJSON()
 
-GET     /doctors/get_all             	controllers.Application.getAllDoctors()
+GET     /doctors/list	             	controllers.DoctorsController.listOfDoctors()
+GET     /doctors/:id	             	controllers.DoctorsController.showDoctor(id : Long)
+GET		/doctors/new					controllers.DoctorsController.createDoctor()
+POST	/doctors/save					controllers.DoctorsController.saveDoctor()
+DELETE	/doctors/:id/delete				controllers.DoctorsController.deleteDoctor(id : Long)
 
-GET		/patient/find_by_name			controllers.Application.findPatientByName(mask : String ?= null)
+GET		/patient/find_by_name			controllers.PatientsController.findPatientByName(mask : String)
+
+GET		/settings	controllers.SettingsController.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

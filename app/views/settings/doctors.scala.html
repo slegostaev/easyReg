@@ -1,0 +1,12 @@
+@(doctors : List[Doctor])
+<ul>
+	@if(doctors != null) {
+		@for(doctor <- doctors) {
+			<li>
+				<a href="@routes.DoctorsController.showDoctor(doctor.id)">
+					@doctor.getFullName
+				</a>
+			</li>
+		}
+	}
+</ul>

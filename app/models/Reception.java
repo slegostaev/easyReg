@@ -56,6 +56,9 @@ public class Reception extends BaseEntity {
     @JsonProperty(value = "text")
     public String description;
     
+    @Column(name = "first_time")
+    public boolean isFirstTime;
+    
     public static List<Reception> findAll() {
     	return Ebean.find(Reception.class).findList();
     }
