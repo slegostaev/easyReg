@@ -16,9 +16,11 @@ create table doctors (
   id                        bigint not null,
   create_date               timestamp,
   updated_date              timestamp,
-  first_name                varchar(255),
-  last_name                 varchar(255),
+  first_name                varchar(255) not null,
+  surname                   varchar(255) not null,
+  patronymic                varchar(255) not null,
   is_active                 boolean not null,
+  birthday                  date not null,
   unit_id                   bigint,
   constraint pk_doctors primary key (id))
 ;
@@ -27,9 +29,11 @@ create table patients (
   id                        bigint not null,
   create_date               timestamp,
   updated_date              timestamp,
-  first_name                varchar(255),
-  last_name                 varchar(255),
+  first_name                varchar(255) not null,
+  surname                   varchar(255) not null,
+  patronymic                varchar(255) not null,
   is_active                 boolean not null,
+  birthday                  date not null,
   constraint pk_patients primary key (id))
 ;
 
@@ -43,6 +47,7 @@ create table receptions (
   start_time                time not null,
   end_time                  time not null,
   description               varchar(255),
+  first_time                boolean,
   constraint pk_receptions primary key (id))
 ;
 
