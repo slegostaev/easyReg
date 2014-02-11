@@ -211,10 +211,10 @@
         	})
         	
         	scheduler.templates.event_text = function(start,end,ev) {
-        		if (ev.patient === undefined) {
-        			return ev.text;
+        		if (ev.patient) {
+        			return ev.patient.fullname;
         		}
-        	    return ev.patient.fullname;
+        		return ev.text;
         	};
         	
         	dhtmlXTooltip.config.className = 'dhtmlXTooltip tooltip'; 
@@ -224,7 +224,7 @@
         	
         	var format = scheduler.date.date_to_str("%H:%i"); 
         	scheduler.templates.tooltip_text = function(start, end, ev) {
-        		if (ev.patient !== undefined) {
+        		if (ev.patient) {
         			var content = "<b>Пациент:</b> "+ ev.patient.fullname + "<br/><b>Прием с </b> " + format(start) + "<b> по </b> " + format(end);
         			if (ev.first_time) {
         				content += '<br><span style="color: red;">Первичный прием!</span>'
@@ -242,6 +242,11 @@
     			$("#doctor_name").text(getDoctorName());
     			$("#reception_time").text(getTime(ev.start_date) + '-' + getTime(ev.end_date));
     			$('#first_time').prop('checked', ev.first_time);
+    			var duration = $('#duration').empty();
+    			for (var i = 0; i < 5; i++) {
+    				var value = scheduler.config.event_duration * i;
+    				duration.append($('<option>').val(value).text(value));
+    			}
     		};
     		
     		$('#patient_name').autocomplete({
@@ -265,11 +270,11 @@
 		function save_form() {
 			var ev = scheduler.getEvent(scheduler.getState().lightbox_id);
 			ev.text = $("#description").val();
-			if (ev.patient === undefined) {
+			if (!ev.patient) {
 				ev.patient = {};
 			}
 			
-			if (ev.doctor === undefined) {
+			if (!ev.doctor) {
 				ev.doctor = {};
 			}
 			var patientField = $("#patient_name");
@@ -277,6 +282,11 @@
 			ev.patient.key = patientField.data('patient-id');
 			ev.doctor.key = doctor_id;
 			ev.first_time = $("#first_time").prop("checked");
+			var newDuration = parseInt($("#duration").val());
+			if (newDuration != 0) {
+				ev.end_date.setMinutes(ev.end_date.getMinutes() + newDuration);
+			}
+			
 			
 			jsRoutes.controllers.ReceptionsController.saveReception().ajax({
 				data : {
@@ -290,6 +300,7 @@
 				}
 			}).done(function(resp) {
 				ev.key = resp;
+				scheduler.updateEvent(ev.id);
 			}).fail(function(resp) {
 				alert(resp)
 			}).always(function() {
@@ -343,6 +354,7 @@
 		<div class="header"></div>
 		<div class="content">
 			<label for="reception_time" style="padding-right: 10px;">Время приема:</label><span id="reception_time"></span><br>
+			<label for="doctor_name" style="padding-right: 10px;">Увеличить прием на (мин):</label><select id="duration" style="width: 50px;"></select><br>
 			<label for="doctor_name" style="padding-right: 10px;">Доктор:</label><span id="doctor_name"></span><br>
 			<label for="patient_name" style="padding-right: 10px;">Пациент:</label><input type="text" name="patient_name" value="" id="patient_name" 
 				data-patinent-id=""><br>
