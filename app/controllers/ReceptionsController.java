@@ -25,6 +25,7 @@ public class ReceptionsController extends Controller {
 		public Long start_date;
 		public Long end_date;
 		public String description;
+		public Boolean first_time;
 		
 		public Reception getReception() {
 			Reception reception = new Reception();
@@ -37,6 +38,7 @@ public class ReceptionsController extends Controller {
 			reception.endTime = new Time(end_date);
 			reception.description = description;
 			reception.receptionDate = new java.sql.Date(reception.startTime.getTime());
+			reception.isFirstTime = first_time;
 			return reception;
 		}
 	}

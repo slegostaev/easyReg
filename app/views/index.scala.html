@@ -95,6 +95,21 @@
 			height: 10px;
 			cursor: pointer;
 		}
+		
+		/*event in day or week view*/
+        .dhx_cal_event.first_time_event div{
+            background-color: green !important;
+            color: white !important;
+        }
+        /*multi-day event in month view*/
+        .dhx_cal_event_line.first_time_event{
+            background-color: green !important;
+            color: white !important;
+        }
+        /*first_time event , in month view*/
+        .dhx_cal_event_clear.first_time_event{
+            color: green !important;
+        }
     </style>
     <script type="text/javascript">
     
@@ -120,11 +135,11 @@
     		var format = scheduler.date.date_to_str("%H:%i");
     		scheduler.config.time_step = step;
     		scheduler.config.hour_size_px = 88;
-    		scheduler.templates.hour_scale = function(date){
-    			var html="";
+    		scheduler.templates.hour_scale = function(date) {
+    			var html= '';
     			for (var i = 0; i < 2; i++) {
-    				html += "<div style='height:44px;line-height:44px;'>" + format(date) + "</div>";
-    				date = scheduler.date.add(date,step,"minute");
+    				html += '<div style="height:44px;line-height:44px;">' + format(date) + '</div>';
+    				date = scheduler.date.add(date, step, "minute");
     			}
     			return html;
     		}
@@ -140,6 +155,12 @@
 	   		    css:   "red_section",
 	   		 	sections: {	unit: [2, 5], timeline: [2, 5]}
 	   		});
+	   		
+	   		scheduler.templates.event_class = function(start, end, event) {
+	   			if (event.first_time) {
+	   				return 'first_time_event';
+	   			}
+	   		}
     		       		
 	   		
 	   		scheduler.attachEvent("onMouseMove", function(id, e) {
@@ -204,7 +225,11 @@
         	var format = scheduler.date.date_to_str("%H:%i"); 
         	scheduler.templates.tooltip_text = function(start, end, ev) {
         		if (ev.patient !== undefined) {
-        	    	return "<b>Пациент:</b> "+ ev.patient.fullname + "<br/><b>Прием с </b> " + format(start) + "<b> по </b> "+format(end);
+        			var content = "<b>Пациент:</b> "+ ev.patient.fullname + "<br/><b>Прием с </b> " + format(start) + "<b> по </b> " + format(end);
+        			if (ev.first_time) {
+        				content += '<br><span style="color: red;">Первичный прием!</span>'
+        			}
+        	    	return content;
         		}
         	};
         	
@@ -216,6 +241,7 @@
     			$("#description").val(ev.text);
     			$("#doctor_name").text(getDoctorName());
     			$("#reception_time").text(getTime(ev.start_date) + '-' + getTime(ev.end_date));
+    			$('#first_time').prop('checked', ev.first_time);
     		};
     		
     		$('#patient_name').autocomplete({
@@ -250,6 +276,8 @@
 			ev.patient.fullname = patientField.val();
 			ev.patient.key = patientField.data('patient-id');
 			ev.doctor.key = doctor_id;
+			ev.first_time = $("#first_time").prop("checked");
+			
 			jsRoutes.controllers.ReceptionsController.saveReception().ajax({
 				data : {
 					id : ev.key,
@@ -257,7 +285,8 @@
 					doctor_id : ev.doctor.key,
 					description: ev.text,
 					start_date : ev.start_date.getTime(),
-					end_date : ev.end_date.getTime()
+					end_date : ev.end_date.getTime(),
+					first_time : ev.first_time
 				}
 			}).done(function(resp) {
 				ev.key = resp;
@@ -313,12 +342,12 @@
 	<div id="reception_form">
 		<div class="header"></div>
 		<div class="content">
-			<label for="reception_time" style="padding-right: 10px;">Time:</label><span id="reception_time"></span><br>
-			<label for="doctor_name" style="padding-right: 10px;">Doctor:</label><span id="doctor_name"></span><br>
-			<label for="patient_name" style="padding-right: 10px;">Patient:</label><input type="text" name="patient_name" value="" id="patient_name" 
+			<label for="reception_time" style="padding-right: 10px;">Время приема:</label><span id="reception_time"></span><br>
+			<label for="doctor_name" style="padding-right: 10px;">Доктор:</label><span id="doctor_name"></span><br>
+			<label for="patient_name" style="padding-right: 10px;">Пациент:</label><input type="text" name="patient_name" value="" id="patient_name" 
 				data-patinent-id=""><br>
-	
-			<label for="description" style="padding-right: 10px;">Description</label>
+			<label for="patient_name" style="padding-right: 10px;">Первичный прием:</label><input type="checkbox" name="first_time" id="first_time"/><br>
+			<label for="description" style="padding-right: 10px;">Описание:</label>
 			<textarea name="description" id="description"></textarea><br>
 		</div>
 		

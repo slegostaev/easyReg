@@ -57,6 +57,7 @@ public class Reception extends BaseEntity {
     public String description;
     
     @Column(name = "first_time")
+    @JsonProperty(value = "first_time")
     public boolean isFirstTime;
     
     public static List<Reception> findAll() {
