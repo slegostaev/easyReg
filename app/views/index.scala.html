@@ -55,10 +55,10 @@
 			width: 200px;
 		}
 		
-		.ui-autocomplete {
+		.ui-autocomplete, .ui-dialog, .ui-front {
 			z-index: 11000 !important;
 		}
-		
+
 		/* background color for whole container and it's border*/
 		.my_event {
 			background-color: #add8e6;
@@ -262,6 +262,25 @@
     				$.data(this, 'patient-id', ui.item.id);
     		      }
     		})
+    		
+			$('#patient_form').dialog({
+				title: 'Новый пациент',
+				width: '400px',
+				resizable: true,
+				autoOpen: false,
+				modal: true,
+				buttons: {
+					'Сохранить': function() {
+						$(this).submit();
+					},
+					'Закрыть' : function() {
+						$(this).dialog('close');
+					}
+				},
+				close: function() {
+					
+				}
+			})
         })
         
 		var html = function(id) { return document.getElementById(id); }; //just a helper
@@ -349,15 +368,28 @@
 			scheduler.init('scheduler_here', state.date === undefined ? new Date() : state.date, state.mode === undefined ? "unit" : state.mode);
         	scheduler.load('/receptions/get_all', 'json');
 		}
+		
+		function addNewPatient() {
+			$('#patient_form').dialog('open');
+		}
     </script>
-	<div id="reception_form">
+    <div id="patient_form" style="display: none;">
+    	<label for="patient_surname">Фамилия:</label><input type="text" id="patient_surname" required><br>
+    	<label for="patient_firstname">Имя:</label><input type="text" id="patient_firstname" required><br>
+    	<label for="patient_patronymic">Отчество:</label><input type="text" id="patient_patronymic" required><br>
+    	<label for="patient_birth_date">Дата рождения:</label><input type="date" id="patient_birth_date" required><br>
+    	<label for="patient_phone_number">Номер телефона:</label><input type="tel" pattern="(\+?\d[- .]*){7,13}" id="patient_phone_number" required><br>
+    </div>
+	<div id="reception_form" style="display: none;">
 		<div class="header"></div>
 		<div class="content">
 			<label for="reception_time" style="padding-right: 10px;">Время приема:</label><span id="reception_time"></span><br>
 			<label for="doctor_name" style="padding-right: 10px;">Увеличить прием на (мин):</label><select id="duration" style="width: 50px;"></select><br>
 			<label for="doctor_name" style="padding-right: 10px;">Доктор:</label><span id="doctor_name"></span><br>
 			<label for="patient_name" style="padding-right: 10px;">Пациент:</label><input type="text" name="patient_name" value="" id="patient_name" 
-				data-patinent-id=""><br>
+				data-patinent-id="">
+			<button onclick="addNewPatient()">Добавить</button>
+			<br>
 			<label for="patient_name" style="padding-right: 10px;">Первичный прием:</label><input type="checkbox" name="first_time" id="first_time"/><br>
 			<label for="description" style="padding-right: 10px;">Описание:</label>
 			<textarea name="description" id="description"></textarea><br>
