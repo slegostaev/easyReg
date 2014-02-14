@@ -10,6 +10,8 @@ import javax.persistence.TemporalType;
 
 import play.db.ebean.Model;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,10 +29,12 @@ public class BaseEntity extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
     @JsonIgnore
+    @CreatedTimestamp
     public Timestamp createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_date")
     @JsonIgnore
+    @UpdatedTimestamp
     public Timestamp updatedDate;
 }

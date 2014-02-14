@@ -1,10 +1,15 @@
 package models;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import play.data.format.Formats.DateTime;
+import play.data.validation.Constraints.Required;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,26 +21,42 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User extends BaseEntity {
 	
 	@JsonIgnore
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "firstname", nullable = false)
+	@Required
     public String firstName;
     
 	@JsonIgnore
     @Column(name = "surname", nullable = false)
+	@Required
     public String surname;
 	
 	@JsonIgnore
 	@Column(name = "patronymic", nullable = false)
+	@Required
     public String patronymic;
     
-    @Column(name = "is_active", nullable = false)
-    public boolean isActive;
+    @Column(name = "is_active", nullable = false, columnDefinition = "boolean default true")
+    public boolean isActive = true;
     
     @JsonProperty(value = "fullname")
-    @Transient
-    public String getFullName() {
-    	return surname + " " + firstName + " " + patronymic;
-    }
+    @Column(name = "fullname")
+    public String fullname;
     
+    @JsonIgnore
+    public String email;
+    
+    
+    @Embedded
+    @JsonIgnore
+    public Phones phones;
+    
+    @JsonIgnore
+    @Embedded
+    public Address address;
+    
+    @Required
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
+    @DateTime(pattern = "yyyy-MM-dd")
     public Date birthday;
 }

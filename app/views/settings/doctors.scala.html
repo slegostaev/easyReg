@@ -4,7 +4,7 @@
 		@for(doctor <- doctors) {
 			<li>
 				<a href="@routes.DoctorsController.showDoctor(doctor.id)">
-					@doctor.getFullName
+					@doctor.fullname
 				</a>
 			</li>
 		}

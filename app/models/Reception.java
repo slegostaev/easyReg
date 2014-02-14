@@ -15,6 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import play.data.validation.Constraints.Required;
+
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,16 +33,19 @@ public class Reception extends BaseEntity {
 	@Column(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id")
+	@Required
     public Patient patient;
 
 	@Column(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "doctor_id")
+	@Required
     public Doctor doctor;
 	
 	@JsonIgnore
     @Temporal(TemporalType.DATE)
     @Column(name = "reception_date")
+	@Required
     public Date receptionDate;
 	
 	@JsonIgnore

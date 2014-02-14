@@ -5,42 +5,58 @@
 
 create table chairs (
   id                        bigint not null,
-  create_date               timestamp,
-  updated_date              timestamp,
   location                  varchar(255),
   unit_id                   bigint,
+  create_date               timestamp not null,
+  updated_date              timestamp not null,
   constraint pk_chairs primary key (id))
 ;
 
 create table doctors (
   id                        bigint not null,
-  create_date               timestamp,
-  updated_date              timestamp,
-  first_name                varchar(255) not null,
+  firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
   patronymic                varchar(255) not null,
-  is_active                 boolean not null,
-  birthday                  date not null,
+  is_active                 boolean default true not null,
+  fullname                  varchar(255),
+  email                     varchar(255),
+  mobile                    varchar(255),
+  home                      varchar(255),
+  address                   varchar(255),
+  city                      varchar(255),
+  zip                       varchar(255),
+  country                   varchar(255),
+  birthday                  timestamp not null,
   unit_id                   bigint,
+  create_date               timestamp not null,
+  updated_date              timestamp not null,
+  constraint uq_doctors_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_doctors primary key (id))
 ;
 
 create table patients (
   id                        bigint not null,
-  create_date               timestamp,
-  updated_date              timestamp,
-  first_name                varchar(255) not null,
+  firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
   patronymic                varchar(255) not null,
-  is_active                 boolean not null,
-  birthday                  date not null,
+  is_active                 boolean default true not null,
+  fullname                  varchar(255),
+  email                     varchar(255),
+  mobile                    varchar(255),
+  home                      varchar(255),
+  address                   varchar(255),
+  city                      varchar(255),
+  zip                       varchar(255),
+  country                   varchar(255),
+  birthday                  timestamp not null,
+  create_date               timestamp not null,
+  updated_date              timestamp not null,
+  constraint uq_patients_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_patients primary key (id))
 ;
 
 create table receptions (
   id                        bigint not null,
-  create_date               timestamp,
-  updated_date              timestamp,
   patient_id                bigint,
   doctor_id                 bigint,
   reception_date            date,
@@ -48,16 +64,18 @@ create table receptions (
   end_time                  time not null,
   description               varchar(255),
   first_time                boolean,
+  create_date               timestamp not null,
+  updated_date              timestamp not null,
   constraint pk_receptions primary key (id))
 ;
 
 create table units (
   id                        bigint not null,
-  create_date               timestamp,
-  updated_date              timestamp,
   name                      varchar(100) not null,
   start_work                time,
   end_work                  time,
+  create_date               timestamp not null,
+  updated_date              timestamp not null,
   constraint uq_units_name unique (name),
   constraint pk_units primary key (id))
 ;

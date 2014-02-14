@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by km on 24.01.14.
  */
 @Entity
-@Table(name = "doctors")
+@Table(name = "doctors", uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "firstname", "surname", "patronymic", "birthday" }) 
+		})
 public class Doctor extends User {
 	
 	@JsonIgnore

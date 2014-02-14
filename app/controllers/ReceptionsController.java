@@ -76,6 +76,7 @@ public class ReceptionsController extends Controller {
                 controllers.routes.javascript.ReceptionsController.saveReception(),
                 controllers.routes.javascript.ReceptionsController.deleteReception(),
                 controllers.routes.javascript.DoctorsController.getAllDoctorsJSON(),
-                controllers.routes.javascript.PatientsController.findPatientByName()));
+                controllers.routes.javascript.PatientsController.findPatientByName(),
+                controllers.routes.javascript.PatientsController.savePatient()));
     }
 }
