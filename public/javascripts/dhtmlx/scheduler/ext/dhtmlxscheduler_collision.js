@@ -2,7 +2,130 @@
 This software is allowed to use under GPL or you need to obtain Commercial or Enterise License
 to use it in non-GPL project. Please contact sales@dhtmlx.com for details
 */
-(function(){function h(b){var a=scheduler._props?scheduler._props[scheduler._mode]:null,c=scheduler.matrix?scheduler.matrix[scheduler._mode]:null,f=a||c;if(a)var g=f.map_to;if(c)g=f.y_property;f&&b&&(m=scheduler.getEvent(b)[g])}var m,d;scheduler.config.collision_limit=1;scheduler.attachEvent("onBeforeDrag",function(b){h(b);return!0});scheduler.attachEvent("onBeforeLightbox",function(b){var a=scheduler.getEvent(b);d=[a.start_date,a.end_date];h(b);return!0});scheduler.attachEvent("onEventChanged",function(b){if(!b)return!0;
-var a=scheduler.getEvent(b);if(!scheduler.checkCollision(a)){if(!d)return!1;a.start_date=d[0];a.end_date=d[1];a._timed=this.isOneDayEvent(a)}return!0});scheduler.attachEvent("onBeforeEventChanged",function(b){return scheduler.checkCollision(b)});scheduler.attachEvent("onEventAdded",function(b,a){var c=scheduler.checkCollision(a);c||scheduler.deleteEvent(b)});scheduler.attachEvent("onEventSave",function(b,a){a=scheduler._lame_clone(a);a.id=b;if(!a.start_date||!a.end_date){var c=scheduler.getEvent(b);
-a.start_date=new Date(c.start_date);a.end_date=new Date(c.end_date)}a.rec_type&&scheduler._roll_back_dates(a);return scheduler.checkCollision(a)});scheduler.checkCollision=function(b){var a=[],c=scheduler.config.collision_limit;if(b.rec_type)for(var f=scheduler.getRecDates(b),g=0;g<f.length;g++)for(var d=scheduler.getEvents(f[g].start_date,f[g].end_date),i=0;i<d.length;i++)(d[i].event_pid||d[i].id)!=b.id&&a.push(d[i]);else for(var a=scheduler.getEvents(b.start_date,b.end_date),e=0;e<a.length;e++)if(a[e].id==
-b.id){a.splice(e,1);break}var h=scheduler._props?scheduler._props[scheduler._mode]:null,n=scheduler.matrix?scheduler.matrix[scheduler._mode]:null,l=h||n;if(h)var j=l.map_to;if(n)j=l.y_property;var k=!0;if(l){for(var o=0,e=0;e<a.length;e++)a[e][j]==b[j]&&a[e].id!=b.id&&o++;o>=c&&(k=!1)}else a.length>=c&&(k=!1);if(!k){var p=!scheduler.callEvent("onEventCollision",[b,a]);p||(b[j]=m||b[j]);return p}return k}})();
+(function(){
+
+var temp_section;
+var before;
+
+scheduler.config.collision_limit = 1;	
+
+function _setTempSection(event_id) { // for custom views (matrix, timeline, units)
+	var pr = scheduler._props?scheduler._props[scheduler._mode]:null;
+	var matrix = scheduler.matrix?scheduler.matrix[scheduler._mode]:null;
+	var checked_mode = pr||matrix; // units or matrix mode
+	if(pr)
+		var map_to = checked_mode.map_to;
+	if(matrix)
+		var map_to = checked_mode.y_property;
+	if ((checked_mode) && event_id){
+		temp_section = scheduler.getEvent(event_id)[map_to];
+	}	
+}
+
+scheduler.attachEvent("onBeforeDrag",function(id){
+	_setTempSection(id); 
+	return true;
+});
+scheduler.attachEvent("onBeforeLightbox",function(id){
+	var ev = scheduler.getEvent(id);
+	before = [ev.start_date, ev.end_date];
+	_setTempSection(id);
+	return true;
+});
+scheduler.attachEvent("onEventChanged",function(id){
+	if (!id) return true;
+	var ev = scheduler.getEvent(id);
+	if (!scheduler.checkCollision(ev)){
+		if (!before) return false;
+		ev.start_date = before[0];
+		ev.end_date = before[1];
+		ev._timed=this.isOneDayEvent(ev);
+	}
+	return true;
+});
+scheduler.attachEvent("onBeforeEventChanged",function(ev,e,is_new){
+	return scheduler.checkCollision(ev);
+});
+scheduler.attachEvent("onEventAdded",function(id,ev) {
+	var result = scheduler.checkCollision(ev);
+	if (!result)
+		scheduler.deleteEvent(id);
+});
+scheduler.attachEvent("onEventSave",function(id, edited_ev, is_new){
+	edited_ev = scheduler._lame_clone(edited_ev);
+	edited_ev.id = id;
+
+	//lightbox may not have 'time' section
+	if(!(edited_ev.start_date && edited_ev.end_date)){
+		var ev = scheduler.getEvent(id);
+		edited_ev.start_date = new Date(ev.start_date);
+		edited_ev.end_date = new Date(ev.end_date);
+	}
+
+	if(edited_ev.rec_type){
+		scheduler._roll_back_dates(edited_ev);
+	}
+	return scheduler.checkCollision(edited_ev); // in case user creates event on one date but then edited it another
+});
+
+scheduler.checkCollision = function(ev) {
+	var evs = [];
+	var collision_limit = scheduler.config.collision_limit;
+	if (ev.rec_type) {
+		var evs_dates = scheduler.getRecDates(ev);
+		for(var k=0; k<evs_dates.length; k++) {
+			var tevs = scheduler.getEvents(evs_dates[k].start_date, evs_dates[k].end_date);
+			for(var j=0; j<tevs.length; j++) { 
+				if ((tevs[j].event_pid || tevs[j].id) != ev.id )
+					evs.push(tevs[j]);
+			}
+		}
+	} else {
+		evs = scheduler.getEvents(ev.start_date, ev.end_date);
+		for (var i=0; i<evs.length; i++) {
+			if (evs[i].id == ev.id) {
+				evs.splice(i,1);
+				break;
+			}
+		}
+	}
+	
+	var pr = scheduler._props?scheduler._props[scheduler._mode]:null;
+	var matrix = scheduler.matrix?scheduler.matrix[scheduler._mode]:null;
+	
+	var checked_mode = pr||matrix;
+	if(pr)
+		var map_to = checked_mode.map_to;
+	if(matrix)
+		var map_to = checked_mode.y_property;
+	
+	var single = true;
+	if (checked_mode) { // custom view
+		var count = 0;
+
+		for (var i = 0; i < evs.length; i++)
+
+			if (evs[i][map_to] == ev[map_to] && evs[i].id != ev.id)
+				count++;
+				
+		if (count >= collision_limit) {
+
+			single = false;
+		}
+	}
+	else {
+		if ( evs.length >= collision_limit )
+			single = false;
+	}
+	if (!single) {
+		var res = !scheduler.callEvent("onEventCollision",[ev,evs]);
+		if (!res) {
+			ev[map_to] = temp_section||ev[map_to]; // from _setTempSection for custom views
+		}
+		return res;
+	}
+	return single;
+	
+}
+
+})();
