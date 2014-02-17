@@ -5,8 +5,8 @@ $(function() {
 		scheduler.startLightbox(id, document.getElementById("reception_form"));
 		$("#patient_name").focus().val(ev.patient ? ev.patient.fullname : '').data('patient-id', ev.patient ? ev.patient.key : '');
 		$("#description").val(ev.text);
-		$("#doctor_name").text(getDoctorName());
-		$("#reception_time").text(getTime(ev.start_date) + '-' + getTime(ev.end_date));
+		$("#doctor_name").text(getDoctorById(ev.doctor_id).label);
+		$("#reception_time").text(applicationFormatTime(ev.start_date) + '-' + applicationFormatTime(ev.end_date));
 		$('#first_time').prop('checked', ev.first_time);
 		var duration = $('#duration').empty();
 		for (var i = 0; i < 5; i++) {
@@ -77,19 +77,24 @@ function save_form() {
 	var patientField = $("#patient_name");
 	ev.patient.fullname = patientField.val();
 	ev.patient.key = patientField.data('patient-id');
-	if (ev.patient.key === undefined) {
+	if (ev.patient.key == '') {
 		alert('Пациент не выбран!');
 		return;
 	}
 	
-	ev.doctor.key = doctor_id;
+	ev.doctor.key = ev.doctor_id;
 	ev.first_time = $("#first_time").prop("checked");
 	var newDuration = parseInt($("#duration").val());
 	if (newDuration != 0) {
 		ev.end_date.setMinutes(ev.end_date.getMinutes() + newDuration);
 	}
 	
+	saveReception(ev, true)
 	
+	
+}
+
+function saveReception(ev, fromForm) {
 	jsRoutes.controllers.ReceptionsController.saveReception().ajax({
 		data : {
 			id : ev.key,
@@ -106,8 +111,10 @@ function save_form() {
 	}).fail(function(resp) {
 		alert(resp)
 	}).always(function() {
-		scheduler.endLightbox(true, document.getElementById("reception_form"));
-		clearLightbox();
+		if (fromForm) {
+			scheduler.endLightbox(true, document.getElementById("reception_form"));
+			clearLightbox();
+		}
 	})
 }
 
@@ -137,19 +144,15 @@ function clearLightbox() {
 	$('#reception_form input').removeData().val('');
 }
 		
-function getDoctorName() {
+function getDoctorById(doctorId) {
 	var mode = scheduler.getState().mode;
 	var doctor = {};
 	if (mode == 'unit') {
-		doctor = scheduler._props[mode].options[doctor_id - 1];
+		doctor = scheduler._props[mode].options[scheduler._props[mode].order[doctorId]];
 	} else {
-		doctor = scheduler.matrix[mode].y_unit[doctor_id - 1];	
+		doctor = scheduler.matrix[mode].y_unit[scheduler.matrix[mode].order[doctorId]];	
 	}
-	return doctor.label;
-}
-
-function getTime(date) {
-	return date.getHours() + ":" + date.getMinutes();
+	return doctor;
 }
 
 function addNewPatient() {

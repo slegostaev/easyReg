@@ -1,6 +1,6 @@
-var doctor_id;
 var applicationFormatTime = scheduler.date.date_to_str("%H:%i");
 var applicationFormatDate = scheduler.date.date_to_str("%d-%m-%Y");
+var hasCollision = false;
 
 $(function() {
 	//config
@@ -79,15 +79,46 @@ $(function() {
 	
 	
 	//events
-	scheduler.attachEvent("onMouseMove", function(id, e) {
-		doctor_id = scheduler.getActionData(e).section;
-		//console.log(doctor_id);
-	});
+//	scheduler.attachEvent("onMouseMove", function(id, e) {
+//		doctor_id = scheduler.getActionData(e).section;
+//		//console.log(doctor_id);
+//	});
 	
 	scheduler.attachEvent("onEventCollision", function (ev, evs) {
+		hasCollision = true;
 	    alert('На это время уже есть запись!')
-	    return true;
+	    return hasCollision;
 	});
+	
+	scheduler.attachEvent("onBeforeEventChanged", function(ev, e, isNewEvent, ev_old) {
+		if (!hasCollision && !isNewEvent && wereChanges(ev, ev_old)) {
+			if (confirm('Сохранить изменения?')) {
+				if (ev.doctor_id != ev_old.doctor_id) {
+					ev.doctor = getDoctorById(ev.doctor_id);
+				}
+				saveReception(ev, false);
+			} else {
+				updateScheduler();
+			}
+		}
+		hasCollision = false;
+	    return !hasCollision;
+	});
+	
+	function wereChanges(ev, ev_old) {
+		if (ev.doctor_id != ev_old.doctor_id) {
+			return true;
+		}
+		
+		if (ev.start_date.getTime() != ev_old.start_date.getTime()) {
+			return true;
+		}
+		
+		if (ev.end_date.getTime() != ev_old.end_date.getTime()) {
+			return true;
+		}
+		return false;
+	}
 	
 //		scheduler.config.lightbox.sections = [
 //			{ name: "description", height: 50, map_to: "text", type: "textarea", focus: true },
