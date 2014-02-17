@@ -84,6 +84,11 @@ $(function() {
 		//console.log(doctor_id);
 	});
 	
+	scheduler.attachEvent("onEventCollision", function (ev, evs) {
+	    alert('На это время уже есть запись!')
+	    return true;
+	});
+	
 //		scheduler.config.lightbox.sections = [
 //			{ name: "description", height: 50, map_to: "text", type: "textarea", focus: true },
 //			{ name: "patient_name", map_to: "patient_name", type: "combo", filtering: true, cache: false,
