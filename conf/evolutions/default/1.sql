@@ -7,8 +7,8 @@ create table chairs (
   id                        bigint not null,
   location                  varchar(255),
   unit_id                   bigint,
-  create_date               timestamp not null,
-  updated_date              timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint pk_chairs primary key (id))
 ;
 
@@ -28,8 +28,8 @@ create table doctors (
   country                   varchar(255),
   birthday                  timestamp not null,
   unit_id                   bigint,
-  create_date               timestamp not null,
-  updated_date              timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint uq_doctors_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_doctors primary key (id))
 ;
@@ -49,8 +49,8 @@ create table patients (
   zip                       varchar(255),
   country                   varchar(255),
   birthday                  timestamp not null,
-  create_date               timestamp not null,
-  updated_date              timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint uq_patients_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_patients primary key (id))
 ;
@@ -64,8 +64,8 @@ create table receptions (
   end_time                  time not null,
   description               varchar(255),
   first_time                boolean,
-  create_date               timestamp not null,
-  updated_date              timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint pk_receptions primary key (id))
 ;
 
@@ -74,8 +74,8 @@ create table units (
   name                      varchar(100) not null,
   start_work                time,
   end_work                  time,
-  create_date               timestamp not null,
-  updated_date              timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint uq_units_name unique (name),
   constraint pk_units primary key (id))
 ;

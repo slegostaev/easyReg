@@ -7,7 +7,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -23,15 +22,9 @@ public class Patient extends User {
     @OneToMany(mappedBy = "patient")
     public List<Reception> receptions;
     
-    public static List<Patient> findByName(String name) {
-    	return Ebean.find(Patient.class).where().icontains("fullname", name).setMaxRows(10).findList();
-    }
+	public static List<Patient> findByName(String mask) {
+		return findByName(mask, Patient.class);
+	}
+	
     
-    public static Patient save(Patient patient) {
-    	
-    	patient.fullname = patient.surname + " " + patient.firstName + " " + patient.patronymic;
-    	
-    	Ebean.save(patient);
-    	return patient;
-    }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -11,6 +12,7 @@ import javax.persistence.TemporalType;
 import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.Required;
 
+import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -59,4 +61,20 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     @DateTime(pattern = "yyyy-MM-dd")
     public Date birthday;
+    
+    public static <T extends User> T save(T user) {
+    	user.fullname = user.surname + " " + user.firstName + " " + user.patronymic;
+    	Ebean.save(user);
+    	return user;
+    }
+    
+    protected static <T extends User> List<T> findByName(String name, Class<T> classType) {
+    	return Ebean.find(classType).where().icontains("fullname", name).orderBy("fullname").setMaxRows(10).findList();
+    }
+    
+    protected static <T extends User> List<T> findAll(Class<T> classType) {
+    	return Ebean.find(classType).orderBy("fullname").findList();
+    }
+    
+    
 }

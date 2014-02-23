@@ -1,4 +1,7 @@
 @(doctors : List[Doctor])
+<div>
+	<a href="#" onclick="createNewDoctor(); return false;">Добавить нового доктора</a>
+</div>
 <ul>
 	@if(doctors != null) {
 		@for(doctor <- doctors) {
@@ -10,3 +13,47 @@
 		}
 	}
 </ul>
+
+@components.userForm()
+
+<script type="text/javascript" src="@routes.DoctorsController.javascriptRoutes()"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#userForm').dialog({
+			title: 'Новый доктор',
+			width: '500px',
+			resizable: true,
+			autoOpen: false,
+			modal: true,
+			buttons: [{
+				text : 'Сохранить',
+				click: function() {
+					var dialog = $(this);
+					jsRoutes.controllers.DoctorsController.saveDoctor()
+						.ajax({
+							data : $(this).serialize()
+						})
+						.done(function(resp) {
+							location.reload();
+						})
+						.fail(function(resp) {
+							alert(resp.responseText)
+						})
+					}
+				}, {
+					text: 'Закрыть',
+					click: function() {
+						$(this).dialog('close');
+					}
+				}],
+			close: function() {
+				$(this).find('input').removeData().val('');
+			}
+		})
+	})
+	
+	function createNewDoctor() {
+		$('#userForm').dialog('open');
+	}
+
+</script> 

@@ -22,18 +22,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BaseEntity extends Model {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty(value = "key")
     public Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
+    @Column(name = "create_date", columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     @JsonIgnore
     @CreatedTimestamp
     public Timestamp createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_date")
+    @Column(name = "updated_date", columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     @JsonIgnore
     @UpdatedTimestamp
     public Timestamp updatedDate;

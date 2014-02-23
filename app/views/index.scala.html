@@ -118,14 +118,8 @@
     
     </script>
     
-    <form id="patient_form" style="display: none;">
-    	<label for="patient_surname">Фамилия:</label><input type="text" id="patient_surname" name="surname" required><br>
-    	<label for="patient_firstname">Имя:</label><input type="text" id="patient_firstname" name="firstName" required><br>
-    	<label for="patient_patronymic">Отчество:</label><input type="text" id="patient_patronymic" name="patronymic" required><br>
-    	<label for="patient_birth_date">Дата рождения:</label><input type="date" id="patient_birth_date" name="birthday" required><br>
-<!--     	<label for="patient_phone_number">Номер телефона:</label><input type="tel" pattern="(\+?\d[- .]*){7,13}"  -->
-<!--     		name="mobile" id="patient_phone_number" required><br> -->
-    </form>
+    @components.userForm()
+    
 	<div id="reception_form" style="display: none;">
 		<div class="header"></div>
 		<div class="content">

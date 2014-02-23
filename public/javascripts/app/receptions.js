@@ -29,9 +29,9 @@ $(function() {
 	      }
 	})
 	
-	$('#patient_form').dialog({
+	$('#userForm').dialog({
 		title: 'Новый пациент',
-		width: '400px',
+		width: '500px',
 		resizable: true,
 		autoOpen: false,
 		modal: true,
@@ -156,5 +156,5 @@ function getDoctorById(doctorId) {
 }
 
 function addNewPatient() {
-	$('#patient_form').dialog('open');
+	$('#userForm').dialog('open');
 }

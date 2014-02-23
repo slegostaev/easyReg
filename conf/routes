@@ -14,6 +14,7 @@ DELETE	/receptions/delete				controllers.ReceptionsController.deleteReception(id
 #ajax that return json
 GET     /ajax/get_all_doctors           controllers.DoctorsController.getAllDoctorsJSON()
 
+GET     /doctors/js/routes		   	controllers.DoctorsController.javascriptRoutes()
 GET     /doctors/list	             	controllers.DoctorsController.listOfDoctors()
 GET     /doctors/:id	             	controllers.DoctorsController.showDoctor(id : Long)
 GET		/doctors/new					controllers.DoctorsController.createDoctor()

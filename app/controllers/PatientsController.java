@@ -25,7 +25,7 @@ public class PatientsController extends Controller {
 	public static Result savePatient() {
 		Form<Patient> patinetForm = Form.form(Patient.class).bindFromRequest();
 		if (patinetForm.hasErrors()) {
-			return badRequest("Ошибка сохранения, все поля должны быть заполнены.");
+			return badRequest("Ошибка сохранения, все поля должны быть заполнены!");
 		}
 		
 		Patient patient = patinetForm.get();
@@ -33,10 +33,10 @@ public class PatientsController extends Controller {
 			Patient.save(patient);
 			return created(Json.toJson(patient));
 		} catch (PersistenceException e) {
-			Logger.error("Patient creation error", e);
+			Logger.error(e.getMessage(), e);
 		}
 		
-		return badRequest("Ошибка сохранения, возможно такой пациент уже существует.");
+		return badRequest("Ошибка сохранения, возможно такой пациент уже существует!");
 	}
 	
 }

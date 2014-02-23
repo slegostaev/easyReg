@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -37,13 +36,14 @@ public class Doctor extends User {
     @OneToMany(mappedBy = "doctor")
     public List<Reception> receptions;
     
-    public static List<Doctor> findAll() {
-    	return Ebean.find(Doctor.class).findList();
-    }
-    
     @JsonProperty(value = "label")
     @Transient
     public String getLabel() {
     	return surname + " " + firstName;
     }
+    
+    public static List<Doctor> findAll() {
+		return findAll(Doctor.class);
+	}
+    
 }
