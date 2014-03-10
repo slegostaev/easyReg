@@ -38,9 +38,9 @@ public class Unit extends BaseEntity {
 
     @ElementCollection
     @JoinTable(name = "units_schedule", joinColumns = @JoinColumn(name = "id", referencedColumnName = "unit_id"))
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "work_days")
-    public Set<WeekDays> workDays;
+    public Set<DaysOfWeek> workDays;
     
     @JsonIgnore
     @OneToMany(mappedBy = "unit")

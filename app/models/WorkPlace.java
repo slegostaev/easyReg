@@ -10,8 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import play.db.ebean.Model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -19,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "work_places")
-public class WorkPlace extends Model {
+public class WorkPlace extends BaseEntity {
 	
 	@JsonIgnore
     @ManyToOne

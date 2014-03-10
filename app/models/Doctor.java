@@ -46,4 +46,7 @@ public class Doctor extends User {
 		return findAll(Doctor.class);
 	}
     
+    @JsonIgnore
+    @OneToMany(mappedBy = "doctor")
+    public List<WorkPeriod> workPeriods;
 }

@@ -54,3 +54,73 @@ insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (4,
 insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (5, 'Kab 3 right', 1, today, today);
 
 
+
+insert into work_periods (id, doctor_id, start_period, end_period) values (1, 1, '2014-01-01', '2014-05-01');
+
+insert into work_days (id, day_index, start_work, end_work) values (1, 1, '09:00:00', '19:00:00');
+insert into work_days (id, day_index, start_work, end_work) values (2, 2, '10:00:00', '20:00:00');
+insert into work_days (id, day_index, is_weekend) 			values (3, 3, true);
+insert into work_days (id, day_index, start_work, end_work) values (4, 4, '09:00:00', '15:00:00');
+insert into work_days (id, day_index, start_work, end_work) values (5, 5, '10:00:00', '21:00:00');
+insert into work_days (id, day_index, start_work, end_work) values (6, 6, '09:00:00', '18:00:00');
+insert into work_days (id, day_index, is_weekend) 			values (7, 0, true);
+
+insert into time_list (id, work_day_id, start_time, end_time) values (1, 1, '09:00:00', '10:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (2, 1, '10:00:00', '11:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (3, 1, '11:00:00', '12:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (4, 1, '12:00:00', '13:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (5, 1, '13:00:00', '14:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (6, 1, '14:00:00', '15:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (7, 1, '15:00:00', '16:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (8, 1, '16:00:00', '17:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (9, 1, '17:00:00', '18:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (10, 1, '18:00:00', '19:00:00');
+
+insert into time_list (id, work_day_id, start_time, end_time) values (11, 2, '10:00:00', '11:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (12, 2, '11:00:00', '12:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (13, 2, '12:00:00', '13:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (14, 2, '13:00:00', '14:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (15, 2, '14:00:00', '15:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (16, 2, '15:00:00', '16:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (17, 2, '16:00:00', '17:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (18, 2, '17:00:00', '18:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (19, 2, '18:00:00', '19:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (20, 2, '19:00:00', '20:00:00');
+
+insert into time_list (id, work_day_id, start_time, end_time) values (21, 4, '09:00:00', '10:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (22, 4, '10:00:00', '11:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (23, 4, '11:00:00', '12:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (24, 4, '12:00:00', '13:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (25, 4, '13:00:00', '14:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (26, 4, '14:00:00', '15:00:00');
+
+insert into time_list (id, work_day_id, start_time, end_time) values (27, 5, '10:00:00', '11:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (28, 5, '11:00:00', '12:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (29, 5, '12:00:00', '13:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (30, 5, '13:00:00', '14:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (31, 5, '14:00:00', '15:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (32, 5, '15:00:00', '16:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (33, 5, '16:00:00', '17:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (34, 5, '17:00:00', '18:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (35, 5, '18:00:00', '19:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (36, 5, '19:00:00', '20:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (37, 5, '20:00:00', '21:00:00');
+
+insert into time_list (id, work_day_id, start_time, end_time) values (38, 6, '09:00:00', '10:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (39, 6, '10:00:00', '11:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (40, 6, '11:00:00', '12:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (41, 6, '12:00:00', '13:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (42, 6, '13:00:00', '14:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (43, 6, '14:00:00', '15:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (44, 6, '15:00:00', '16:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (45, 6, '16:00:00', '17:00:00');
+insert into time_list (id, work_day_id, start_time, end_time) values (46, 6, '17:00:00', '18:00:00');
+
+insert into work_calendar(id, work_period_id, work_day_id) values (1, 1, 1);
+insert into work_calendar(id, work_period_id, work_day_id) values (2, 1, 2);
+insert into work_calendar(id, work_period_id, work_day_id) values (3, 1, 3);
+insert into work_calendar(id, work_period_id, work_day_id) values (4, 1, 4);
+insert into work_calendar(id, work_period_id, work_day_id) values (5, 1, 5);
+insert into work_calendar(id, work_period_id, work_day_id) values (6, 1, 6);
+insert into work_calendar(id, work_period_id, work_day_id) values (7, 1, 7);
+
