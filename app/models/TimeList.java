@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author "SLegostaev"
  *
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 @Table(name = "time_list")
 public class TimeList extends BaseEntity {
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "work_day_id")
 	public WorkDay workDay;

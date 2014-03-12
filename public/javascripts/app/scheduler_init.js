@@ -1,6 +1,7 @@
 var applicationFormatTime = scheduler.date.date_to_str("%H:%i");
 var applicationFormatDate = scheduler.date.date_to_str("%d-%m-%Y");
 var hasCollision = false;
+var doctors;
 
 $(function() {
 	//config
@@ -56,11 +57,12 @@ $(function() {
 		return html;
 	}
 	
-	scheduler.addMarkedTimespan({ // blocks each Sunday, Monday, Wednesday
+	scheduler.addMarkedTimespan({ // blocks each Sunday
 	    days:  [0], 
 	    zones: "fullday",
 	    type:  "dhx_time_block", 
-	    css:   "red_section",
+	    css:   "red",
+	    html: "<b>Выходной</b>",
 	 	sections: {	unit: [2, 5], timeline: [2, 5]}
 	});
 	
@@ -140,15 +142,18 @@ $(function() {
 //		console.log(doctor_id);
 //		return true;
 //	});
-	
+
 	jsRoutes.controllers.DoctorsController.getAllDoctorsJSON().ajax()
 		.done(function(doctors) {
+			setDoctors(doctors);
 			scheduler.createUnitsView({
 	    	    name : "unit",
 	    	    property : "doctor_id", 
 	    	    list : doctors
 	    	});
-		
+			
+			
+			
 			scheduler.createTimelineView({
 	       	     name : "timeline",
 	       	     x_unit : "minute",//measuring unit of the X-Axis.
@@ -163,9 +168,84 @@ $(function() {
 	       	});
 			
 			updateScheduler();
+			updateScheduleTimespans();
 		})
-	
 })
+
+function setDoctors(doctors) {
+	this.doctors = doctors;
+}
+
+//function createHoliday(doctor, workDay) {
+//	var unitId = getUnitIdByDoctorId(doctor.key);
+//	scheduler.addMarkedTimespan({ // blocks each Sunday
+//	    days:  [workDay.dayIndex], 
+//	    zones: "fullday",
+//	    type:  "dhx_time_block", 
+//	    css:   "red",
+//	    html: "<b>Выходной</b>",
+//	 	sections: {	unit: [unitId], timeline: [unitId]}
+//	});
+//}
+
+//function setupCurrentDay() {
+//	$.each(doctors, function(i, doctor) { 
+//		setupDoctorTimespans(doctor) 
+//	})
+//	scheduler.updateView();
+//}
+
+function updateScheduleTimespans() {
+	$.each(doctors, function(i, doctor) { 
+		setupDoctorTimespans(doctor) 
+	})
+	scheduler.updateView();
+}
+
+function setupDoctorTimespans(doctor) {
+	var unitId = getUnitIdByDoctorId(doctor.key);
+	if (doctor && doctor.workPeriods.length > 0) {
+		$.each(doctor.workPeriods, function(periodIndex, period) {
+			
+			if (period && period.workDays.length > 0) {
+				var start_period = new Date(period.startPeriod);
+				var end_period = new Date(period.endPeriod);
+				while (start_period <= end_period) {
+					start_period = new Date(start_period.setDate(start_period.getDate() + 1));
+					
+					var workDay = getWorkDayByIndex(period.workDays, start_period.getDay());
+					if (workDay) {
+						scheduler.addMarkedTimespan({
+						    days:  new Date(start_period), 
+						    zones: workDay.isWeekend ? "fullday" : [parseWorkHours(workDay.startWork), parseWorkHours(workDay.endWork)],
+						    invert_zones: !workDay.isWeekend,
+						    type:  "dhx_time_block", 
+						    css:   workDay.isWeekend ? "holiday" : "break",
+						    html: workDay.isWeekend ? "<div>Выходной</div>" : "<div>Нет приема</div>",
+						 	sections: {	unit: [unitId], timeline: [unitId] }
+						});
+					}
+				}
+			}
+		})
+	}
+}
+
+function parseWorkHours(sourceString) {
+	var splitted = sourceString.split(':');
+	if (splitted && splitted.length > 1) {
+		var hour = parseInt(splitted[0]);
+		var min = parseInt(splitted[1]);
+		return hour * 60 + min
+	}
+}
+
+function getWorkDayByIndex(workDays, dayIndex) {
+	var workDay = $.grep(workDays, function(day) {
+		return day.index === dayIndex;
+	})	
+	return workDay.length == 1, workDay[0];
+}
 
 function updateScheduler() {
 	var state = scheduler.getState();
@@ -173,3 +253,25 @@ function updateScheduler() {
 	scheduler.init('scheduler_here', state.date === undefined ? new Date() : state.date, state.mode === undefined ? "unit" : state.mode);
 	scheduler.load('/receptions/get_all', 'json');
 }
+
+function getDoctorById(doctorId) {
+//	var mode = scheduler.getState().mode;
+//	var doctor = {};
+//	if (mode == 'unit') {
+//		doctor = scheduler._props[mode].options[scheduler._props[mode].order[doctorId]];
+//	} else {
+//		doctor = scheduler.matrix[mode].y_unit[scheduler.matrix[mode].order[doctorId]];	
+//	}
+	return $.grep(doctors, function(doctor) { return doctor.key === doctorId})[0];
+}
+
+function getUnitIdByDoctorId(doctorId) {
+	var mode = scheduler.getState().mode;
+	var units = (mode == 'unit' ? scheduler._props[mode].options : scheduler.matrix[mode].y_unit);
+	var unit = $.grep(units, function(unit) { return unit.key === doctorId });
+	if (unit) {
+		return unit[0].key;
+	}
+	return null;
+}
+

@@ -143,17 +143,6 @@ function delete_event() {
 function clearLightbox() {
 	$('#reception_form input').removeData().val('');
 }
-		
-function getDoctorById(doctorId) {
-	var mode = scheduler.getState().mode;
-	var doctor = {};
-	if (mode == 'unit') {
-		doctor = scheduler._props[mode].options[scheduler._props[mode].order[doctorId]];
-	} else {
-		doctor = scheduler.matrix[mode].y_unit[scheduler.matrix[mode].order[doctorId]];	
-	}
-	return doctor;
-}
 
 function addNewPatient() {
 	$('#userForm').dialog('open');

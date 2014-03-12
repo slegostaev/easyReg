@@ -10,8 +10,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.legossoft.model.jsonSerializers.DayOfWeekSerializer;
 
 /**
  * @author "SLegostaev"
@@ -36,5 +43,12 @@ public class WorkDay extends BaseEntity {
 	
 	@Column(name = "day_index")
 	@Enumerated(EnumType.ORDINAL)
+	@JsonSerialize(using = DayOfWeekSerializer.class)
+	@JsonProperty(value = "index")
 	public DaysOfWeek dayIndex;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "period_id")
+	public WorkPeriod period;
 }

@@ -25,7 +25,28 @@ public class DoctorsController extends Controller {
 	}
 	
 	public static Result showDoctor(Long id) {
-    	return TODO;
+		if (id == null) {
+			return badRequest("Id is incorrect!");
+		}
+		
+		Doctor doctor = Doctor.findById(id);
+		if (doctor == null) {
+			return notFound("Doctor with same id has been not found.");
+		}
+		
+//		if (doctor.workPeriods != null) {
+//			for (WorkPeriod period : doctor.workPeriods) {
+//				Logger.debug(period.type.name());
+//				if (period.workDays != null) {
+//					for (WorkDay workDay : period.workDays) {
+//						Logger.debug(workDay.dayIndex.name());
+//					}
+//				}
+// 				
+//			}
+//		}
+		
+    	return ok(views.html.doctor.show.render(doctor));
     }
 	
 	public static Result saveDoctor() {

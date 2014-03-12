@@ -1,0 +1,59 @@
+@(doctor : Doctor)
+
+@manageDoctorSettings {
+	<div style="float : left; width: 500px;">
+		<div class="">
+			<span>Фамилия:</span>
+			<span>@doctor.surname</span>
+		</div>
+		
+		<div class="">
+			<span>Имя:</span>
+			<span>@doctor.firstname</span>
+		</div>
+		
+		<div class="">
+			<span>Отчество:</span>
+			<span>@doctor.patronymic</span>
+		</div>
+		
+		<div class="">
+			<span>Электронная почта:</span>
+			<span>@doctor.email</span>
+		</div>
+		
+		<div class="">
+			<span>Дата рождения:</span>
+			<span>@if(doctor.birthday == null) {Нет данных} else { @doctor.birthday }</span>
+		</div>
+		
+
+		<div class="">
+			<span>Телефон мобильный:</span>
+			<span>@if(doctor.phones == null) {Нет данных} else { @doctor.phones.mobile }</span>
+		</div>
+		
+		<div class="">
+			<span>Телефон домашний:</span>
+			<span>@if(doctor.phones == null) {Нет данных} else { @doctor.phones.home }</span>
+		</div>
+		
+		<div class="">
+			<span>Заблокирован?</span>
+			<span>@if(doctor.isActive) {Нет} else {Да}</span>
+		</div>
+		
+		<button>Редактировать</button>
+	</div>
+	
+	<div style="float: right; width: 500px;">
+		<div class="">
+			<span>Адрес</span>
+			<span>@if(doctor.address == null) {Нет данных} else {@doctor.address.address}</span>
+		</div>
+		
+		<button>Редактировать</button>
+	</div>
+	
+	<div style="clear: both;"></div>
+}

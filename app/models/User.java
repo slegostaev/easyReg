@@ -25,7 +25,7 @@ public class User extends BaseEntity {
 	@JsonIgnore
     @Column(name = "firstname", nullable = false)
 	@Required
-    public String firstName;
+    public String firstname;
     
 	@JsonIgnore
     @Column(name = "surname", nullable = false)
@@ -63,7 +63,7 @@ public class User extends BaseEntity {
     public Date birthday;
     
     public static <T extends User> T save(T user) {
-    	user.fullname = user.surname + " " + user.firstName + " " + user.patronymic;
+    	user.fullname = user.surname + " " + user.firstname + " " + user.patronymic;
     	Ebean.save(user);
     	return user;
     }
@@ -76,5 +76,7 @@ public class User extends BaseEntity {
     	return Ebean.find(classType).orderBy("fullname").findList();
     }
     
-    
+    protected static <T extends User> T findById(Long id, Class<T> classType) {
+    	return Ebean.find(classType, id);
+    }
 }

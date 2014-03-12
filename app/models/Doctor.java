@@ -33,20 +33,27 @@ public class Doctor extends User {
     public Unit unit;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     public List<Reception> receptions;
     
     @JsonProperty(value = "label")
     @Transient
     public String getLabel() {
-    	return surname + " " + firstName;
+    	return surname + " " + firstname;
     }
+    
+    
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+    public List<WorkPeriod> workPeriods;
+    
+    
     
     public static List<Doctor> findAll() {
 		return findAll(Doctor.class);
 	}
+
     
-    @JsonIgnore
-    @OneToMany(mappedBy = "doctor")
-    public List<WorkPeriod> workPeriods;
+    public static Doctor findById(Long id) {
+    	return findById(id, Doctor.class);
+    }
 }

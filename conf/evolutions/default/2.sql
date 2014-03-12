@@ -57,13 +57,13 @@ insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (5,
 
 insert into work_periods (id, doctor_id, start_period, end_period) values (1, 1, '2014-01-01', '2014-05-01');
 
-insert into work_days (id, day_index, start_work, end_work) values (1, 1, '09:00:00', '19:00:00');
-insert into work_days (id, day_index, start_work, end_work) values (2, 2, '10:00:00', '20:00:00');
-insert into work_days (id, day_index, is_weekend) 			values (3, 3, true);
-insert into work_days (id, day_index, start_work, end_work) values (4, 4, '09:00:00', '15:00:00');
-insert into work_days (id, day_index, start_work, end_work) values (5, 5, '10:00:00', '21:00:00');
-insert into work_days (id, day_index, start_work, end_work) values (6, 6, '09:00:00', '18:00:00');
-insert into work_days (id, day_index, is_weekend) 			values (7, 0, true);
+insert into work_days (id, period_id, day_index, start_work, end_work) values (1, 1, 1, '09:00:00', '19:00:00');
+insert into work_days (id, period_id, day_index, start_work, end_work) values (2, 1, 2, '10:00:00', '20:00:00');
+insert into work_days (id, period_id, day_index, is_weekend) 			values (3, 1, 3, true);
+insert into work_days (id, period_id, day_index, start_work, end_work) values (4, 1, 4, '09:00:00', '15:00:00');
+insert into work_days (id, period_id, day_index, start_work, end_work) values (5, 1, 5, '10:00:00', '21:00:00');
+insert into work_days (id, period_id, day_index, start_work, end_work) values (6, 1, 6, '09:00:00', '18:00:00');
+insert into work_days (id, period_id, day_index, is_weekend) 			values (7, 1, 0, true);
 
 insert into time_list (id, work_day_id, start_time, end_time) values (1, 1, '09:00:00', '10:00:00');
 insert into time_list (id, work_day_id, start_time, end_time) values (2, 1, '10:00:00', '11:00:00');
@@ -115,12 +115,4 @@ insert into time_list (id, work_day_id, start_time, end_time) values (43, 6, '14
 insert into time_list (id, work_day_id, start_time, end_time) values (44, 6, '15:00:00', '16:00:00');
 insert into time_list (id, work_day_id, start_time, end_time) values (45, 6, '16:00:00', '17:00:00');
 insert into time_list (id, work_day_id, start_time, end_time) values (46, 6, '17:00:00', '18:00:00');
-
-insert into work_calendar(id, work_period_id, work_day_id) values (1, 1, 1);
-insert into work_calendar(id, work_period_id, work_day_id) values (2, 1, 2);
-insert into work_calendar(id, work_period_id, work_day_id) values (3, 1, 3);
-insert into work_calendar(id, work_period_id, work_day_id) values (4, 1, 4);
-insert into work_calendar(id, work_period_id, work_day_id) values (5, 1, 5);
-insert into work_calendar(id, work_period_id, work_day_id) values (6, 1, 6);
-insert into work_calendar(id, work_period_id, work_day_id) values (7, 1, 7);
 
