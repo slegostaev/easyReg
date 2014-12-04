@@ -6,6 +6,6 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache
-)     
+)
 
-play.Project.playJavaSettings
+lazy val root = (project in file(".")).enablePlugins(PlayJava)
