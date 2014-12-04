@@ -3,6 +3,8 @@ package models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -26,5 +28,9 @@ public class Patient extends User {
 		return findByName(mask, Patient.class);
 	}
 	
-    
+	@JsonIgnore
+    @JoinTable(name="group_members",
+    	      joinColumns={@JoinColumn(name="group_id", referencedColumnName="id")},
+    	      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")})
+    public List<Group> groups;
 }

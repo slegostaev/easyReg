@@ -5,7 +5,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,6 +26,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by km on 24.01.14.
  */
 @MappedSuperclass
+@Entity
+@Table(name = "users")
 public class User extends BaseEntity {
 	
 	@JsonIgnore
@@ -62,6 +70,13 @@ public class User extends BaseEntity {
     @DateTime(pattern = "yyyy-MM-dd")
     public Date birthday;
     
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="group_members",
+    	      joinColumns={@JoinColumn(name="group_id", referencedColumnName="id")},
+    	      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")})
+    public List<Group> groups;
+    
     public static <T extends User> T save(T user) {
     	user.fullname = user.surname + " " + user.firstname + " " + user.patronymic;
     	Ebean.save(user);
@@ -69,14 +84,11 @@ public class User extends BaseEntity {
     }
     
     protected static <T extends User> List<T> findByName(String name, Class<T> classType) {
-    	return Ebean.find(classType).where().icontains("fullname", name).orderBy("fullname").setMaxRows(10).findList();
+    	return Ebean.find(classType).where().eq("fullname", name).orderBy("fullname").setMaxRows(10).findList();
     }
     
-    protected static <T extends User> List<T> findAll(Class<T> classType) {
-    	return Ebean.find(classType).orderBy("fullname").findList();
+    public static List<? extends User> findAll() {
+    	return Ebean.find(User.class).orderBy("fullname").findList();
     }
-    
-    protected static <T extends User> T findById(Long id, Class<T> classType) {
-    	return Ebean.find(classType, id);
-    }
+
 }

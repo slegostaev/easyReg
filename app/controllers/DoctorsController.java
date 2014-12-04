@@ -29,7 +29,7 @@ public class DoctorsController extends Controller {
 			return badRequest("Id is incorrect!");
 		}
 		
-		Doctor doctor = Doctor.findById(id);
+		Doctor doctor = Doctor.findById(id, Doctor.class);
 		if (doctor == null) {
 			return notFound("Doctor with same id has been not found.");
 		}

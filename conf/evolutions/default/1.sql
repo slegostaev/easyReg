@@ -34,6 +34,15 @@ create table doctors (
   constraint pk_doctors primary key (id))
 ;
 
+create table groups (
+  id                        bigint not null,
+  name                      varchar(100) not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
+  constraint uq_groups_name unique (name),
+  constraint pk_groups primary key (id))
+;
+
 create table patients (
   id                        bigint not null,
   firstname                 varchar(255) not null,
@@ -53,6 +62,17 @@ create table patients (
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint uq_patients_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_patients primary key (id))
+;
+
+create table protected_pages (
+  id                        bigint not null,
+  class_name                varchar(100) not null,
+  method_name               varchar(100) not null,
+  description               varchar(250),
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
+  constraint uq_protected_pages_1 unique (class_name,method_name),
+  constraint pk_protected_pages primary key (id))
 ;
 
 create table receptions (
@@ -90,11 +110,32 @@ create table units (
   constraint pk_units primary key (id))
 ;
 
+create table users (
+  id                        bigint not null,
+  firstname                 varchar(255) not null,
+  surname                   varchar(255) not null,
+  patronymic                varchar(255) not null,
+  is_active                 boolean default true not null,
+  fullname                  varchar(255),
+  email                     varchar(255),
+  mobile                    varchar(255),
+  home                      varchar(255),
+  address                   varchar(255),
+  city                      varchar(255),
+  zip                       varchar(255),
+  country                   varchar(255),
+  birthday                  timestamp not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
+  constraint pk_users primary key (id))
+;
+
 create table work_days (
   id                        bigint not null,
   start_work                time,
   end_work                  time,
   is_weekend                boolean default false not null,
+  duration_visit            integer default 60 not null,
   day_index                 integer,
   period_id                 bigint,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
@@ -126,17 +167,35 @@ create table work_places (
   constraint pk_work_places primary key (id))
 ;
 
+
+create table group_members (
+  group_id                       bigint not null,
+  user_id                        bigint not null,
+  constraint pk_group_members primary key (group_id, user_id))
+;
+
+create table access_list (
+  group_id                       bigint not null,
+  page_id                        bigint not null,
+  constraint pk_access_list primary key (group_id, page_id))
+;
 create sequence chairs_seq;
 
 create sequence doctors_seq;
 
+create sequence groups_seq;
+
 create sequence patients_seq;
+
+create sequence protected_pages_seq;
 
 create sequence receptions_seq;
 
 create sequence time_list_seq;
 
 create sequence units_seq;
+
+create sequence users_seq;
 
 create sequence work_days_seq;
 
@@ -165,6 +224,14 @@ create index ix_work_places_chair_9 on work_places (chair_id);
 
 
 
+alter table group_members add constraint fk_group_members_doctors_01 foreign key (group_id) references doctors (id) on delete restrict on update restrict;
+
+alter table group_members add constraint fk_group_members_groups_02 foreign key (user_id) references groups (id) on delete restrict on update restrict;
+
+alter table access_list add constraint fk_access_list_protected_page_01 foreign key (group_id) references protected_pages (id) on delete restrict on update restrict;
+
+alter table access_list add constraint fk_access_list_groups_02 foreign key (page_id) references groups (id) on delete restrict on update restrict;
+
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
@@ -173,13 +240,23 @@ drop table if exists chairs;
 
 drop table if exists doctors;
 
+drop table if exists group_members;
+
+drop table if exists groups;
+
+drop table if exists access_list;
+
 drop table if exists patients;
+
+drop table if exists protected_pages;
 
 drop table if exists receptions;
 
 drop table if exists time_list;
 
 drop table if exists units;
+
+drop table if exists users;
 
 drop table if exists work_days;
 
@@ -193,13 +270,19 @@ drop sequence if exists chairs_seq;
 
 drop sequence if exists doctors_seq;
 
+drop sequence if exists groups_seq;
+
 drop sequence if exists patients_seq;
+
+drop sequence if exists protected_pages_seq;
 
 drop sequence if exists receptions_seq;
 
 drop sequence if exists time_list_seq;
 
 drop sequence if exists units_seq;
+
+drop sequence if exists users_seq;
 
 drop sequence if exists work_days_seq;
 

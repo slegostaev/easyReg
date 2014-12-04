@@ -5,6 +5,7 @@
 
 # Home page
 GET     /                               controllers.Application.index()
+GET     /index2                        		controllers.Application.index2()
 
 GET     /receptions/js/routes		   	controllers.ReceptionsController.javascriptRoutes()
 GET     /receptions/get_all             controllers.ReceptionsController.getAllReceptions()

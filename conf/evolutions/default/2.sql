@@ -3,6 +3,11 @@
 
 insert into units (id, name, start_work, end_work) values (1, 'Зубы и десны', '09:00:00', '20:00:00');
 
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE) 
+	values (1, 'Легостаев', 'Сергей', 'Васильевич', '1982-05-25', 'Легостаев Сергей Васильевич', today, today);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE) 
+	values (2, 'Колесников', 'Владимир', 'Петрович', '1989-01-12', 'Колесников Владимир Петрович', today, today);
+
 insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
 	values (1, 'Иванов', 'Иван', 'Иванович', '1975-01-23', 1, 'Иванов Иван Иванович');
 insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
@@ -52,8 +57,6 @@ insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (2,
 insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (3, 'Kab 3 left', 1, today, today);
 insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (4, 'Kab 4', 1, today, today);
 insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (5, 'Kab 3 right', 1, today, today);
-
-
 
 insert into work_periods (id, doctor_id, start_period, end_period) values (1, 1, '2014-01-01', '2014-05-01');
 
@@ -116,3 +119,10 @@ insert into time_list (id, work_day_id, start_time, end_time) values (44, 6, '15
 insert into time_list (id, work_day_id, start_time, end_time) values (45, 6, '16:00:00', '17:00:00');
 insert into time_list (id, work_day_id, start_time, end_time) values (46, 6, '17:00:00', '18:00:00');
 
+insert into groups (id, name, CREATE_DATE, UPDATED_DATE) values (1, 'Администраторы', today, today);
+insert into groups (id, name, CREATE_DATE, UPDATED_DATE) values (2, 'Доктора', today, today);
+insert into groups (id, name, CREATE_DATE, UPDATED_DATE) values (3, 'Регистраторы', today, today);
+insert into groups (id, name, CREATE_DATE, UPDATED_DATE) values (4, 'Управляющие', today, today);
+
+insert into group_members (group_id, user_id) values (1, 1);
+insert into group_members (group_id, user_id) values (4, 2);

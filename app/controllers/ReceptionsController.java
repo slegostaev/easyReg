@@ -11,11 +11,12 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.legossoft.security.core.Access;
 /**
  * @author "SLegostaev"
  *
  */
-
 public class ReceptionsController extends Controller {
 	
 	public static class ReceptionForm {
@@ -43,6 +44,7 @@ public class ReceptionsController extends Controller {
 		}
 	}
 	
+	@Access(description = "Создание/редактирование регистратуры")
 	public static Result saveReception() {
 		Form<ReceptionForm> receptionForm = Form.form(ReceptionForm.class).bindFromRequest();
 		if (receptionForm.hasErrors()) {
@@ -59,12 +61,14 @@ public class ReceptionsController extends Controller {
 		return reception.id == null ? badRequest("save error") : ok(reception.id.toString());
 	}
 	
+	@Access(description = "Удаление регистратуры")
 	public static Result deleteReception(Long id) {
 		int result = Reception.deleteReception(id);
 		Logger.debug("delete result " + result);
 		return ok();
 	}
 	
+	@Access(description = "Доступ к списку регистратур")
 	public static Result getAllReceptions() {
         return ok(Json.toJson(Reception.findAll()));
     }

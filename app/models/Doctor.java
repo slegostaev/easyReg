@@ -47,13 +47,11 @@ public class Doctor extends User {
     public List<WorkPeriod> workPeriods;
     
     
-    
     public static List<Doctor> findAll() {
 		return findAll(Doctor.class);
 	}
-
     
-    public static Doctor findById(Long id) {
-    	return findById(id, Doctor.class);
-    }
+//    public static Doctor findById(Long id) {
+//    	return findById(id, Doctor.class);
+//    }
 }

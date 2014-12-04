@@ -2,6 +2,7 @@ var applicationFormatTime = scheduler.date.date_to_str("%H:%i");
 var applicationFormatDate = scheduler.date.date_to_str("%d-%m-%Y");
 var hasCollision = false;
 var doctors;
+var default_duration_visit = 30;
 
 $(function() {
 	//config
@@ -170,7 +171,62 @@ $(function() {
 			updateScheduler();
 			updateScheduleTimespans();
 		})
+	scheduler.attachEvent("onClick", function(id, e){
+		scheduler.showLightbox(id);
+	});
+	
+	scheduler.attachEvent("onTemplatesReady", function() {
+		
+		
+		
+		var marked = null;
+		var marked_date = null;
+		var marked_section = null;
+//		scheduler.attachEvent("onEmptyClick", function(date, native_event){
+//			scheduler.unmarkTimespan(marked);
+//			marked = null;
+//
+//			var fixed_date = fix_date(date);
+//			scheduler.addEventNow(fixed_date, scheduler.date.add(fixed_date, event_step, "minute"));
+//		});
+		
+		scheduler.attachEvent("onMouseMove", function(event_id, native_event) {
+			var obj = scheduler.getActionData(native_event);
+			var fixed_date = fix_date(obj.date);
+
+
+			if (+fixed_date != +marked_date || marked_section != obj.section) {
+				console.log(obj.section + ": " +fixed_date)
+				scheduler.unmarkTimespan(marked);
+				var doctor = getDoctorById(obj.section);
+				var workDay = getWorkDayForDoctor(doctor);
+				marked_date = fixed_date;
+				marked_section = obj.section;
+				marked = scheduler.markTimespan({
+					start_date: fixed_date,
+					end_date: scheduler.date.add(fixed_date, workDay ? workDay.duration_visit : default_duration_visit, "minute"),
+					css: "highlighted_timespan",
+					sections: {	unit: [obj.section] }
+				});
+			}
+		});
+	})
+	
 })
+
+function fix_date(date) {  // 17:48:56 -> 17:30:00
+	date = new Date(date);
+	if (date.getMinutes() > 15 && date.getMinutes() < 30) {
+		date.setMinutes(30);
+	} else if (date.getMinutes() > 30 && date.getMinutes() < 45) {
+		date.setMinutes(45);
+	} else {
+		date.setMinutes(0);
+	}
+		
+	date.setSeconds(0);
+	return date;
+};
 
 function setDoctors(doctors) {
 	this.doctors = doctors;
@@ -240,6 +296,27 @@ function parseWorkHours(sourceString) {
 	}
 }
 
+function getWorkDayForDoctor(doctor, date) {
+	if (doctor && doctor.workPeriods.length > 0) {
+		var period = $.grep(doctor.workPeriods, function(period) {
+			var start_period = new Date(period.startPeriod);
+			var end_period = new Date(period.endPeriod);
+			return start_period <= date && date <= end_period;
+		})
+		
+		if (period && period[0]) {
+			var workDay = $.grep(period[0].workDays, function(day) {
+				return day.getDay() === date.getDay();
+			})
+			
+			if (workDay && workDay[0]) {
+				return workDay[0];
+			}
+		}
+	}
+	return null;
+}
+
 function getWorkDayByIndex(workDays, dayIndex) {
 	var workDay = $.grep(workDays, function(day) {
 		return day.index === dayIndex;
@@ -274,4 +351,3 @@ function getUnitIdByDoctorId(doctorId) {
 	}
 	return null;
 }
-

@@ -38,8 +38,12 @@ public class WorkDay extends BaseEntity {
 	@Column(name="is_weekend", nullable = false, columnDefinition = "boolean default false")
 	public boolean isWeekend;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "workDay")
 	public List<TimeList> timeList;
+	
+	@Column(name="duration_visit", nullable = false, columnDefinition = "integer default 60")
+	public Integer durationVisit;
 	
 	@Column(name = "day_index")
 	@Enumerated(EnumType.ORDINAL)
