@@ -30,18 +30,17 @@ public class Global extends GlobalSettings {
 		
 		List<ProtectedPage> protectedPages = ProtectedPage.findAll(ProtectedPage.class);
 		if (protectedPages.size() == 0) {
-			Set<Method> protectedMethods = SecurityUtil.getProtectedMethods();
-			for (Method method : protectedMethods) {
-				protectedPages.add(new ProtectedPage(method.getDeclaringClass().getCanonicalName(), method.getName(), method.getAnnotation(Access.class).description()));
-			}
-			Ebean.save(protectedPages);
-			
 			Group adminsGroup = Group.byName("Администраторы");
-			if (adminsGroup != null) {
-				adminsGroup.allowPages = protectedPages;
-				Ebean.save(adminsGroup);
-			} else {
+			if (adminsGroup == null) {
 				Logger.error("Группа администраторов не задана");
+			} else {
+				Set<Method> protectedMethods = SecurityUtil.getProtectedMethods();
+				for (Method method : protectedMethods) {
+					ProtectedPage protectedPage = new ProtectedPage(method.getDeclaringClass().getCanonicalName(), method.getName(), method.getAnnotation(Access.class).description());
+					protectedPage.groups.add(adminsGroup);
+					protectedPages.add(protectedPage);
+				}
+				Ebean.save(protectedPages);
 			}
 		}
 		super.beforeStart(arg0);

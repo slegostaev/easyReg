@@ -3,6 +3,8 @@
  */
 package com.legossoft.security.core;
 
+import java.util.List;
+
 import models.Group;
 import models.ProtectedPage;
 import models.User;
@@ -40,7 +42,10 @@ public class AccessAction extends Action<Access> {
 		}
 		
 		for (Group group : user.groups) {
-			if (group.allowPages != null && group.allowPages.contains(protectedPage)) {
+			List<ProtectedPage> allowPages = group.allowPages;
+			if (allowPages == null || allowPages.size() == 0) {
+				Logger.error(String.format("Гуппа %s не содержит разрешенных страниц", group.name));
+			} else {
 				Logger.debug(configuration.description() + " - доступ разрешен для " + user.fullname);
 				return delegate.call(arg0);
 			}

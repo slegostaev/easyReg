@@ -1,5 +1,6 @@
 package controllers;
 
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -10,21 +11,25 @@ import com.legossoft.security.core.Access;
  */
 public class Application extends Controller {
 	
+	private static Form<LoginForm> loginForm = Form.form(LoginForm.class);
+	
 	@Access(description = "Таблица с расписанием врачей")
     public static Result index() {
-//    	Cookie cookie = Http.Context.current().request().cookie("test");
-//    	if (cookie != null && cookie.maxAge() != null) {
-//    		Logger.debug(cookie.maxAge().toString());
-//    	}
-//    	Http.Context.current().response().setCookie("test", "test", 1800);
         return ok(views.html.index.render());
     }
-	
-    @Access(description = "Test method")
-	public static Result index2() throws ClassNotFoundException {
-//		Set<String> strings = Classpath.getTypesAnnotatedWith(Play.application(), "controllers", Access.class);
-		
-		return TODO;
-	}
+
+    public static Result login() {
+    	return ok(views.html.login.render(loginForm));
+    }
     
+    public static class LoginForm {
+    	public String username;
+    	public String password;
+    	public boolean remembeMe = true;
+    }
+    
+    
+    public static Result auth() {
+    	return TODO;
+    }
 }

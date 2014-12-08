@@ -5,8 +5,10 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -50,7 +52,7 @@ public class ProtectedPage extends BaseEntity {
 	public String description;
 	
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name="access_list",
   	      joinColumns={@JoinColumn(name="group_id", referencedColumnName="id")},
   	      inverseJoinColumns={@JoinColumn(name="page_id", referencedColumnName="id")})
@@ -60,6 +62,15 @@ public class ProtectedPage extends BaseEntity {
 		return Ebean.find(ProtectedPage.class).where().eq("class_name", className).eq("method_name", methodName).findUnique();
 //		List<ProtectedPage> pages = Ebean.find(ProtectedPage.class).where().eq("class_name", className).eq("method_name", methodName).findList();
 //		return pages.size() > 0 ? pages.get(0) : null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see play.db.ebean.Model#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object arg0) {
+		ProtectedPage page = (ProtectedPage) arg0;
+		return page != null && page.className.equals(this.className) && page.methodName.equals(this.methodName);
 	}
 	
 }
