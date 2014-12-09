@@ -24,8 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Creation date: 03 марта 2014 г.
  */
 @Entity
-@Table(name = "work_periods")
-public class WorkPeriod extends BaseEntity {
+@Table(name = "schedule_templates")
+public class ScheduleTemplate extends BaseEntity {
 	
 	@ManyToOne
 	@JsonIgnore
@@ -42,6 +42,6 @@ public class WorkPeriod extends BaseEntity {
 	@Column(name = "period_type", nullable = false, columnDefinition = "integer default 0")
 	public PeriodType type;
 	
-	@OneToMany(mappedBy  = "period", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy  = "scheduleTemplate", fetch = FetchType.EAGER)
 	public List<WorkDay> workDays;
 }

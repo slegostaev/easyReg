@@ -2,56 +2,39 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
+import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by km on 24.01.14.
  */
 @Entity
-@Table(name = "doctors", uniqueConstraints = {
-			@UniqueConstraint(columnNames = { "firstname", "surname", "patronymic", "birthday" }) 
-		})
+@DiscriminatorValue("1")
 public class Doctor extends User {
 	
-	@JsonIgnore
-    @OneToMany(mappedBy = "doctor")
-    public List<WorkPlace> workPlaces;
+//	@Required
+//    @Enumerated(value = EnumType.ORDINAL)
+//    @Column(name = "user_type")
+//    private UserType userType = UserType.doctor;
 	
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id")
-    public Unit unit;
-    
     @JsonIgnore
     @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     public List<Reception> receptions;
     
-    @JsonProperty(value = "label")
-    @Transient
-    public String getLabel() {
-    	return surname + " " + firstname;
-    }
-    
-    
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
-    public List<WorkPeriod> workPeriods;
+    public List<ScheduleTemplate> scheduleTemplates;
     
     
     public static List<Doctor> findAll() {
-		return findAll(Doctor.class);
+		return Ebean.find(Doctor.class).orderBy("fullname").findList();
 	}
     
-//    public static Doctor findById(Long id) {
-//    	return findById(id, Doctor.class);
-//    }
+    public static Doctor findById(Long id) {
+    	return findById(id, Doctor.class);
+    }
 }

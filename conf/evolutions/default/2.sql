@@ -1,27 +1,23 @@
 # --- !Ups
 
 
-insert into units (id, name, start_work, end_work) values (1, 'Зубы и десны', '09:00:00', '20:00:00');
+insert into clinics (id, name, start_work, end_work) values (1, 'Зубы и десны', '09:00:00', '20:00:00');
 
-insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE) 
-	values (1, 'Легостаев', 'Сергей', 'Васильевич', '1982-05-25', 'Легостаев Сергей Васильевич', today, today);
-insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE) 
-	values (2, 'Колесников', 'Владимир', 'Петрович', '1989-01-12', 'Колесников Владимир Петрович', today, today);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (1, 'Легостаев', 'Сергей', 'Васильевич', '1982-05-25', 'Легостаев Сергей Васильевич', today, today, 'admin', 'admin', 0);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (2, 'Колесников', 'Владимир', 'Петрович', '1989-01-12', 'Колесников Владимир Петрович', today, today, 'user', 'user', 0);
 
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (1, 'Иванов', 'Иван', 'Иванович', '1975-01-23', 1, 'Иванов Иван Иванович');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (2, 'Петров', 'Александр', 'Петрович', '1970-12-1', 1, 'Петров Александ Петрович');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (3, 'Петров', 'Сергей', 'Семенович', '1980-10-12', 1, 'Петров Сергей Семенович');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (4, 'Фадеев', 'Петр', 'Фадеевич', '1985-03-30', 1, 'Фадеев Петр Фадеевич');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (5, 'Пушкин', 'Денис', 'Васильевич', '1981-09-17', 1, 'Пушкин Денис Васильвич');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (6, 'Толстой', 'Андрей', 'Викторович', '1965-03-11', 1, 'Толстой Андрей Викторович');
-insert into doctors (id, surname, firstname, patronymic, birthday, unit_id, fullname) 
-	values (7, 'Легостаева', 'Мария', 'Сергеевна', '1972-02-19', 1, 'Легостаева Мария Сергеевна');
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (3, 'Иванов', 'Иван', 'Иванович', '1975-01-23', 'Иванов Иван Иванович', today, today, 'user1', 'user', 1);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (4, 'Петров', 'Александр', 'Петрович', '1970-12-1', 'Петров Александ Петрович', today, today, 'user2', 'user', 1);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (5, 'Петров', 'Сергей', 'Семенович', '1980-10-12', 'Петров Сергей Семенович', today, today, 'user3', 'user', 1);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type)  
+	values (6, 'Фадеев', 'Петр', 'Фадеевич', '1985-03-30', 'Фадеев Петр Фадеевич', today, today, 'user4', 'user', 1);
+insert into users (id, surname, firstname, patronymic, birthday, fullname, CREATE_DATE, UPDATED_DATE, login, password, user_type) 
+	values (7, 'Пушкин', 'Денис', 'Васильевич', '1981-09-17', 'Пушкин Денис Васильвич', today, today, 'user5', 'user', 1);
 
 insert into patients (id, surname, firstname, patronymic, birthday, CREATE_DATE, UPDATED_DATE, fullname) 
 	values (10, 'Комаров', 'Сергей', 'Андреевич', '1972-02-9', today, today, 'Комаров Сергей Андреевич');
@@ -52,21 +48,15 @@ insert into patients (id, surname, firstname, patronymic, birthday, CREATE_DATE,
 insert into patients (id, surname, firstname, patronymic, birthday, CREATE_DATE, UPDATED_DATE, fullname) 
 	values (150, 'Торхова', 'Екатерина', 'Ивановна', '1953-02-19', today, today, 'Торхова Екатерина Ивановна');
 
-insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (1, 'Kab 1', 1, today, today);
-insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (2, 'Kab 2', 1, today, today);
-insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (3, 'Kab 3 left', 1, today, today);
-insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (4, 'Kab 4', 1, today, today);
-insert into chairs (id, location, unit_id, CREATE_DATE, UPDATED_DATE) values (5, 'Kab 3 right', 1, today, today);
+insert into schedule_templates (id, doctor_id, start_period, end_period) values (1, 3, '2014-01-01', '2014-05-01');
 
-insert into work_periods (id, doctor_id, start_period, end_period) values (1, 1, '2014-01-01', '2014-05-01');
-
-insert into work_days (id, period_id, day_index, start_work, end_work) values (1, 1, 1, '09:00:00', '19:00:00');
-insert into work_days (id, period_id, day_index, start_work, end_work) values (2, 1, 2, '10:00:00', '20:00:00');
-insert into work_days (id, period_id, day_index, is_weekend) 			values (3, 1, 3, true);
-insert into work_days (id, period_id, day_index, start_work, end_work) values (4, 1, 4, '09:00:00', '15:00:00');
-insert into work_days (id, period_id, day_index, start_work, end_work) values (5, 1, 5, '10:00:00', '21:00:00');
-insert into work_days (id, period_id, day_index, start_work, end_work) values (6, 1, 6, '09:00:00', '18:00:00');
-insert into work_days (id, period_id, day_index, is_weekend) 			values (7, 1, 0, true);
+insert into work_days (id, schedule_template_id, day_index, start_work, end_work) values (1, 1, 1, '09:00:00', '19:00:00');
+insert into work_days (id, schedule_template_id, day_index, start_work, end_work) values (2, 1, 2, '10:00:00', '20:00:00');
+insert into work_days (id, schedule_template_id, day_index, is_weekend) 			values (3, 1, 3, true);
+insert into work_days (id, schedule_template_id, day_index, start_work, end_work) values (4, 1, 4, '09:00:00', '15:00:00');
+insert into work_days (id, schedule_template_id, day_index, start_work, end_work) values (5, 1, 5, '10:00:00', '21:00:00');
+insert into work_days (id, schedule_template_id, day_index, start_work, end_work) values (6, 1, 6, '09:00:00', '18:00:00');
+insert into work_days (id, schedule_template_id, day_index, is_weekend) 			values (7, 1, 0, true);
 
 insert into time_list (id, work_day_id, start_time, end_time) values (1, 1, '09:00:00', '10:00:00');
 insert into time_list (id, work_day_id, start_time, end_time) values (2, 1, '10:00:00', '11:00:00');

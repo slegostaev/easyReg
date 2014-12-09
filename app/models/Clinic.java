@@ -1,7 +1,6 @@
 package models;
 
 import java.sql.Time;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,19 +10,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by km on 27.01.14.
  */
 @Entity
-@Table(name = "units")
-public class Unit extends BaseEntity {
+@Table(name = "clinics")
+public class Clinic extends BaseEntity {
 
     @Column(unique = true, nullable = false, length = 100)
     public String name;
@@ -37,12 +33,9 @@ public class Unit extends BaseEntity {
     public Time endWork;
 
     @ElementCollection
-    @JoinTable(name = "units_schedule", joinColumns = @JoinColumn(name = "id", referencedColumnName = "unit_id"))
+    @JoinTable(name = "schedule_clinics", joinColumns = @JoinColumn(name = "id", referencedColumnName = "clinic_id"))
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "work_days")
     public Set<DaysOfWeek> workDays;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "unit")
-    public List<Doctor> doctors;
+
 }

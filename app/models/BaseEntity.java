@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by km on 24.01.14.
  */
 @MappedSuperclass
-public class BaseEntity extends Model {
+public abstract class BaseEntity extends Model {
 
     @Id
     @JsonProperty(value = "key")
@@ -38,6 +39,11 @@ public class BaseEntity extends Model {
     @JsonIgnore
     @UpdatedTimestamp
     public Timestamp updatedDate;
+//    
+    @JsonIgnore
+    @Column(nullable = true)
+    @OneToOne
+    public User creator;
     
     public static <T> List<T> findAll(Class<T> classType) {
     	return Ebean.find(classType).findList();

@@ -3,39 +3,21 @@
 
 # --- !Ups
 
-create table chairs (
+create table clinics (
   id                        bigint not null,
-  location                  varchar(255),
-  unit_id                   bigint,
+  creator_id                bigint,
+  name                      varchar(100) not null,
+  start_work                time,
+  end_work                  time,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint pk_chairs primary key (id))
-;
-
-create table doctors (
-  id                        bigint not null,
-  firstname                 varchar(255) not null,
-  surname                   varchar(255) not null,
-  patronymic                varchar(255) not null,
-  is_active                 boolean default true not null,
-  fullname                  varchar(255),
-  email                     varchar(255),
-  mobile                    varchar(255),
-  home                      varchar(255),
-  address                   varchar(255),
-  city                      varchar(255),
-  zip                       varchar(255),
-  country                   varchar(255),
-  birthday                  timestamp not null,
-  unit_id                   bigint,
-  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
-  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint uq_doctors_1 unique (firstname,surname,patronymic,birthday),
-  constraint pk_doctors primary key (id))
+  constraint uq_clinics_name unique (name),
+  constraint pk_clinics primary key (id))
 ;
 
 create table groups (
   id                        bigint not null,
+  creator_id                bigint,
   name                      varchar(100) not null,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
@@ -45,10 +27,10 @@ create table groups (
 
 create table patients (
   id                        bigint not null,
+  creator_id                bigint,
   firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
   patronymic                varchar(255) not null,
-  is_active                 boolean default true not null,
   fullname                  varchar(255),
   email                     varchar(255),
   mobile                    varchar(255),
@@ -66,6 +48,7 @@ create table patients (
 
 create table protected_pages (
   id                        bigint not null,
+  creator_id                bigint,
   class_name                varchar(100) not null,
   method_name               varchar(100) not null,
   description               varchar(250),
@@ -77,6 +60,7 @@ create table protected_pages (
 
 create table receptions (
   id                        bigint not null,
+  creator_id                bigint,
   patient_id                bigint,
   doctor_id                 bigint,
   reception_date            date,
@@ -89,8 +73,22 @@ create table receptions (
   constraint pk_receptions primary key (id))
 ;
 
+create table schedule_templates (
+  id                        bigint not null,
+  creator_id                bigint,
+  doctor_id                 bigint,
+  start_period              timestamp not null,
+  end_period                timestamp,
+  period_type               integer default 0 not null,
+  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
+  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
+  constraint ck_schedule_templates_period_type check (period_type in (0,1)),
+  constraint pk_schedule_templates primary key (id))
+;
+
 create table time_list (
   id                        bigint not null,
+  creator_id                bigint,
   work_day_id               bigint,
   start_time                time not null,
   end_time                  time not null,
@@ -99,23 +97,13 @@ create table time_list (
   constraint pk_time_list primary key (id))
 ;
 
-create table units (
-  id                        bigint not null,
-  name                      varchar(100) not null,
-  start_work                time,
-  end_work                  time,
-  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
-  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint uq_units_name unique (name),
-  constraint pk_units primary key (id))
-;
-
 create table users (
+  user_type                 integer(31) not null,
   id                        bigint not null,
+  creator_id                bigint,
   firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
   patronymic                varchar(255) not null,
-  is_active                 boolean default true not null,
   fullname                  varchar(255),
   email                     varchar(255),
   mobile                    varchar(255),
@@ -125,63 +113,44 @@ create table users (
   zip                       varchar(255),
   country                   varchar(255),
   birthday                  timestamp not null,
+  is_active                 boolean default true not null,
+  login                     varchar(255),
+  password                  varchar(255),
+  clinic_id                 bigint,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
+  constraint uq_users_1 unique (firstname,surname,patronymic,birthday),
   constraint pk_users primary key (id))
 ;
 
 create table work_days (
   id                        bigint not null,
+  creator_id                bigint,
   start_work                time,
   end_work                  time,
   is_weekend                boolean default false not null,
   duration_visit            integer default 60 not null,
   day_index                 integer,
-  period_id                 bigint,
+  schedule_template_id      bigint,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
   constraint ck_work_days_day_index check (day_index in (0,1,2,3,4,5,6)),
   constraint pk_work_days primary key (id))
 ;
 
-create table work_periods (
-  id                        bigint not null,
-  doctor_id                 bigint,
-  start_period              timestamp not null,
-  end_period                timestamp,
-  period_type               integer default 0 not null,
-  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
-  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint ck_work_periods_period_type check (period_type in (0,1)),
-  constraint pk_work_periods primary key (id))
-;
-
-create table work_places (
-  id                        bigint not null,
-  doctor_id                 bigint,
-  chair_id                  bigint,
-  start_date                timestamp,
-  end_date                  timestamp,
-  create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
-  updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint pk_work_places primary key (id))
-;
-
-
-create table group_members (
-  group_id                       bigint not null,
-  user_id                        bigint not null,
-  constraint pk_group_members primary key (group_id, user_id))
-;
 
 create table access_list (
   group_id                       bigint not null,
   page_id                        bigint not null,
   constraint pk_access_list primary key (group_id, page_id))
 ;
-create sequence chairs_seq;
 
-create sequence doctors_seq;
+create table group_members (
+  group_id                       bigint not null,
+  user_id                        bigint not null,
+  constraint pk_group_members primary key (group_id, user_id))
+;
+create sequence clinics_seq;
 
 create sequence groups_seq;
 
@@ -191,58 +160,64 @@ create sequence protected_pages_seq;
 
 create sequence receptions_seq;
 
-create sequence time_list_seq;
+create sequence schedule_templates_seq;
 
-create sequence units_seq;
+create sequence time_list_seq;
 
 create sequence users_seq;
 
 create sequence work_days_seq;
 
-create sequence work_periods_seq;
+alter table clinics add constraint fk_clinics_creator_1 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_clinics_creator_1 on clinics (creator_id);
+alter table groups add constraint fk_groups_creator_2 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_groups_creator_2 on groups (creator_id);
+alter table patients add constraint fk_patients_creator_3 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_patients_creator_3 on patients (creator_id);
+alter table protected_pages add constraint fk_protected_pages_creator_4 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_protected_pages_creator_4 on protected_pages (creator_id);
+alter table receptions add constraint fk_receptions_creator_5 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_receptions_creator_5 on receptions (creator_id);
+alter table receptions add constraint fk_receptions_patient_6 foreign key (patient_id) references patients (id) on delete restrict on update restrict;
+create index ix_receptions_patient_6 on receptions (patient_id);
+alter table receptions add constraint fk_receptions_doctor_7 foreign key (doctor_id) references users (id) on delete restrict on update restrict;
+create index ix_receptions_doctor_7 on receptions (doctor_id);
+alter table schedule_templates add constraint fk_schedule_templates_creator_8 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_schedule_templates_creator_8 on schedule_templates (creator_id);
+alter table schedule_templates add constraint fk_schedule_templates_doctor_9 foreign key (doctor_id) references users (id) on delete restrict on update restrict;
+create index ix_schedule_templates_doctor_9 on schedule_templates (doctor_id);
+alter table time_list add constraint fk_time_list_creator_10 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_time_list_creator_10 on time_list (creator_id);
+alter table time_list add constraint fk_time_list_workDay_11 foreign key (work_day_id) references work_days (id) on delete restrict on update restrict;
+create index ix_time_list_workDay_11 on time_list (work_day_id);
+alter table users add constraint fk_users_creator_12 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_users_creator_12 on users (creator_id);
+alter table users add constraint fk_users_clinic_13 foreign key (clinic_id) references clinics (id) on delete restrict on update restrict;
+create index ix_users_clinic_13 on users (clinic_id);
+alter table work_days add constraint fk_work_days_creator_14 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_work_days_creator_14 on work_days (creator_id);
+alter table work_days add constraint fk_work_days_scheduleTemplate_15 foreign key (schedule_template_id) references schedule_templates (id) on delete restrict on update restrict;
+create index ix_work_days_scheduleTemplate_15 on work_days (schedule_template_id);
 
-create sequence work_places_seq;
 
-alter table chairs add constraint fk_chairs_unit_1 foreign key (unit_id) references units (id) on delete restrict on update restrict;
-create index ix_chairs_unit_1 on chairs (unit_id);
-alter table doctors add constraint fk_doctors_unit_2 foreign key (unit_id) references units (id) on delete restrict on update restrict;
-create index ix_doctors_unit_2 on doctors (unit_id);
-alter table receptions add constraint fk_receptions_patient_3 foreign key (patient_id) references patients (id) on delete restrict on update restrict;
-create index ix_receptions_patient_3 on receptions (patient_id);
-alter table receptions add constraint fk_receptions_doctor_4 foreign key (doctor_id) references doctors (id) on delete restrict on update restrict;
-create index ix_receptions_doctor_4 on receptions (doctor_id);
-alter table time_list add constraint fk_time_list_workDay_5 foreign key (work_day_id) references work_days (id) on delete restrict on update restrict;
-create index ix_time_list_workDay_5 on time_list (work_day_id);
-alter table work_days add constraint fk_work_days_period_6 foreign key (period_id) references work_periods (id) on delete restrict on update restrict;
-create index ix_work_days_period_6 on work_days (period_id);
-alter table work_periods add constraint fk_work_periods_doctor_7 foreign key (doctor_id) references doctors (id) on delete restrict on update restrict;
-create index ix_work_periods_doctor_7 on work_periods (doctor_id);
-alter table work_places add constraint fk_work_places_doctor_8 foreign key (doctor_id) references doctors (id) on delete restrict on update restrict;
-create index ix_work_places_doctor_8 on work_places (doctor_id);
-alter table work_places add constraint fk_work_places_chair_9 foreign key (chair_id) references chairs (id) on delete restrict on update restrict;
-create index ix_work_places_chair_9 on work_places (chair_id);
-
-
-
-alter table group_members add constraint fk_group_members_doctors_01 foreign key (group_id) references doctors (id) on delete restrict on update restrict;
-
-alter table group_members add constraint fk_group_members_groups_02 foreign key (user_id) references groups (id) on delete restrict on update restrict;
 
 alter table access_list add constraint fk_access_list_protected_page_01 foreign key (group_id) references protected_pages (id) on delete restrict on update restrict;
 
 alter table access_list add constraint fk_access_list_groups_02 foreign key (page_id) references groups (id) on delete restrict on update restrict;
 
+alter table group_members add constraint fk_group_members_users_01 foreign key (group_id) references users (id) on delete restrict on update restrict;
+
+alter table group_members add constraint fk_group_members_groups_02 foreign key (user_id) references groups (id) on delete restrict on update restrict;
+
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists chairs;
-
-drop table if exists doctors;
-
-drop table if exists group_members;
+drop table if exists clinics;
 
 drop table if exists groups;
+
+drop table if exists group_members;
 
 drop table if exists access_list;
 
@@ -252,23 +227,17 @@ drop table if exists protected_pages;
 
 drop table if exists receptions;
 
-drop table if exists time_list;
+drop table if exists schedule_templates;
 
-drop table if exists units;
+drop table if exists time_list;
 
 drop table if exists users;
 
 drop table if exists work_days;
 
-drop table if exists work_periods;
-
-drop table if exists work_places;
-
 SET REFERENTIAL_INTEGRITY TRUE;
 
-drop sequence if exists chairs_seq;
-
-drop sequence if exists doctors_seq;
+drop sequence if exists clinics_seq;
 
 drop sequence if exists groups_seq;
 
@@ -278,15 +247,11 @@ drop sequence if exists protected_pages_seq;
 
 drop sequence if exists receptions_seq;
 
-drop sequence if exists time_list_seq;
+drop sequence if exists schedule_templates_seq;
 
-drop sequence if exists units_seq;
+drop sequence if exists time_list_seq;
 
 drop sequence if exists users_seq;
 
 drop sequence if exists work_days_seq;
-
-drop sequence if exists work_periods_seq;
-
-drop sequence if exists work_places_seq;
 

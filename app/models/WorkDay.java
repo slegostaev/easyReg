@@ -53,6 +53,6 @@ public class WorkDay extends BaseEntity {
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "period_id")
-	public WorkPeriod period;
+	@JoinColumn(name = "schedule_template_id")
+	public ScheduleTemplate scheduleTemplate;
 }
