@@ -6,7 +6,9 @@
 # Home page
 GET     /                               controllers.Application.index()
 GET		/login							controllers.Application.login()
+GET		/logout							controllers.Application.logout()
 POST	/auth							controllers.Application.auth()
+
 
 GET     /receptions/js/routes		   	controllers.ReceptionsController.javascriptRoutes()
 GET     /receptions/get_all             controllers.ReceptionsController.getAllReceptions()

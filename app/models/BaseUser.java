@@ -80,4 +80,7 @@ public class BaseUser extends BaseEntity {
     	return Ebean.find(classType).where().eq("fullname", name).orderBy("fullname").setMaxRows(10).findList();
     }
     
+//    public static <T extends BaseUser> List<T> findAll() {
+//		return (List<T>) Ebean.find(BaseUser.class).orderBy("fullname").findList();
+//	}
 }

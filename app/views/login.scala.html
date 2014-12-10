@@ -1,6 +1,10 @@
 @(loginForm : Form[Application.LoginForm])
 
 @main {
-
+	<form action="@routes.Application.auth" method="post">
+		<input type="text" id="login" name="login" value="@loginForm("login").value" required="required"/>
+		<input type="password" id="password" name="password" autocomplete="off" required="required"/>
+		<button type="submit">Войти</button>
+	</form>
 
 }

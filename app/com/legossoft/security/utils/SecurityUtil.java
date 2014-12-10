@@ -6,6 +6,8 @@ package com.legossoft.security.utils;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+import models.User;
+
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
@@ -22,6 +24,9 @@ import com.legossoft.security.core.Access;
  *
  */
 public class SecurityUtil {
+	
+	public static final String SESSION_ID = "session_id";
+	
 	public static Set<Method> getProtectedMethods() {
 		Reflections reflections = new Reflections(
                 new ConfigurationBuilder()
@@ -34,5 +39,9 @@ public class SecurityUtil {
 			Logger.debug(method.getDeclaringClass().getCanonicalName() + ":" +method.getName() + " " + a.description()); 
 		}
 		return methods;
+	}
+	
+	public static String generateSessionId(User user) {
+		return java.util.UUID.randomUUID().toString();
 	}
 }

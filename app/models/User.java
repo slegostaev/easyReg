@@ -61,8 +61,11 @@ public class User extends BaseUser {
     	      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")})
     public List<Group> groups;
     
-    public static List<Doctor> findAll() {
-		return Ebean.find(Doctor.class).orderBy("fullname").findList();
+    public static List<User> findAllUsers() {
+		return Ebean.find(User.class).orderBy("fullname").findList();
 	}
-
+    
+    public static User authenticate(String login, String password) {
+		return Ebean.find(User.class).where().eq("login", login.toLowerCase()).eq("password", password).findUnique();
+	}
 }

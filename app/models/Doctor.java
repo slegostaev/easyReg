@@ -30,7 +30,7 @@ public class Doctor extends User {
     public List<ScheduleTemplate> scheduleTemplates;
     
     
-    public static List<Doctor> findAll() {
+    public static List<Doctor> findAllDoctors() {
 		return Ebean.find(Doctor.class).orderBy("fullname").findList();
 	}
     

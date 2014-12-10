@@ -17,11 +17,11 @@ import play.mvc.Result;
 public class DoctorsController extends Controller {
 	
 	public static Result getAllDoctorsJSON() {
-    	return ok(Json.toJson(Doctor.findAll()));
+    	return ok(Json.toJson(Doctor.findAllDoctors()));
     }
 	
 	public static Result listOfDoctors() {
-		return ok(views.html.settings.doctors.render(Doctor.findAll()));
+		return ok(views.html.settings.doctors.render(Doctor.findAllDoctors()));
 	}
 	
 	public static Result showDoctor(Long id) {

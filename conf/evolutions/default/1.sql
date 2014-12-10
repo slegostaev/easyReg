@@ -86,6 +86,12 @@ create table schedule_templates (
   constraint pk_schedule_templates primary key (id))
 ;
 
+create table sessions (
+  session_id                varchar(255) not null,
+  user_id                   bigint,
+  constraint pk_sessions primary key (session_id))
+;
+
 create table time_list (
   id                        bigint not null,
   creator_id                bigint,
@@ -162,6 +168,8 @@ create sequence receptions_seq;
 
 create sequence schedule_templates_seq;
 
+create sequence sessions_seq;
+
 create sequence time_list_seq;
 
 create sequence users_seq;
@@ -186,18 +194,20 @@ alter table schedule_templates add constraint fk_schedule_templates_creator_8 fo
 create index ix_schedule_templates_creator_8 on schedule_templates (creator_id);
 alter table schedule_templates add constraint fk_schedule_templates_doctor_9 foreign key (doctor_id) references users (id) on delete restrict on update restrict;
 create index ix_schedule_templates_doctor_9 on schedule_templates (doctor_id);
-alter table time_list add constraint fk_time_list_creator_10 foreign key (creator_id) references users (id) on delete restrict on update restrict;
-create index ix_time_list_creator_10 on time_list (creator_id);
-alter table time_list add constraint fk_time_list_workDay_11 foreign key (work_day_id) references work_days (id) on delete restrict on update restrict;
-create index ix_time_list_workDay_11 on time_list (work_day_id);
-alter table users add constraint fk_users_creator_12 foreign key (creator_id) references users (id) on delete restrict on update restrict;
-create index ix_users_creator_12 on users (creator_id);
-alter table users add constraint fk_users_clinic_13 foreign key (clinic_id) references clinics (id) on delete restrict on update restrict;
-create index ix_users_clinic_13 on users (clinic_id);
-alter table work_days add constraint fk_work_days_creator_14 foreign key (creator_id) references users (id) on delete restrict on update restrict;
-create index ix_work_days_creator_14 on work_days (creator_id);
-alter table work_days add constraint fk_work_days_scheduleTemplate_15 foreign key (schedule_template_id) references schedule_templates (id) on delete restrict on update restrict;
-create index ix_work_days_scheduleTemplate_15 on work_days (schedule_template_id);
+alter table sessions add constraint fk_sessions_user_10 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_sessions_user_10 on sessions (user_id);
+alter table time_list add constraint fk_time_list_creator_11 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_time_list_creator_11 on time_list (creator_id);
+alter table time_list add constraint fk_time_list_workDay_12 foreign key (work_day_id) references work_days (id) on delete restrict on update restrict;
+create index ix_time_list_workDay_12 on time_list (work_day_id);
+alter table users add constraint fk_users_creator_13 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_users_creator_13 on users (creator_id);
+alter table users add constraint fk_users_clinic_14 foreign key (clinic_id) references clinics (id) on delete restrict on update restrict;
+create index ix_users_clinic_14 on users (clinic_id);
+alter table work_days add constraint fk_work_days_creator_15 foreign key (creator_id) references users (id) on delete restrict on update restrict;
+create index ix_work_days_creator_15 on work_days (creator_id);
+alter table work_days add constraint fk_work_days_scheduleTemplate_16 foreign key (schedule_template_id) references schedule_templates (id) on delete restrict on update restrict;
+create index ix_work_days_scheduleTemplate_16 on work_days (schedule_template_id);
 
 
 
@@ -229,6 +239,8 @@ drop table if exists receptions;
 
 drop table if exists schedule_templates;
 
+drop table if exists sessions;
+
 drop table if exists time_list;
 
 drop table if exists users;
@@ -248,6 +260,8 @@ drop sequence if exists protected_pages_seq;
 drop sequence if exists receptions_seq;
 
 drop sequence if exists schedule_templates_seq;
+
+drop sequence if exists sessions_seq;
 
 drop sequence if exists time_list_seq;
 

@@ -39,7 +39,7 @@ public abstract class BaseEntity extends Model {
     @JsonIgnore
     @UpdatedTimestamp
     public Timestamp updatedDate;
-//    
+
     @JsonIgnore
     @Column(nullable = true)
     @OneToOne
