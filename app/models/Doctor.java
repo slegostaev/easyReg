@@ -2,6 +2,8 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Created by km on 24.01.14.
  */
 @Entity
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue("1")
 public class Doctor extends User {
 	
