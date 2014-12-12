@@ -18,12 +18,19 @@ DELETE	/receptions/delete				controllers.ReceptionsController.deleteReception(id
 #ajax that return json
 GET     /ajax/get_all_doctors           controllers.DoctorsController.getAllDoctorsJSON()
 
-GET     /doctors/js/routes		   	controllers.DoctorsController.javascriptRoutes()
+GET     /doctors/js/routes		   		controllers.DoctorsController.javascriptRoutes()
 GET     /doctors/list	             	controllers.DoctorsController.listOfDoctors()
-GET     /doctors/:id	             	controllers.DoctorsController.showDoctor(id : Long)
-GET		/doctors/new					controllers.DoctorsController.createDoctor()
-POST	/doctors/save					controllers.DoctorsController.saveDoctor()
-DELETE	/doctors/:id/delete				controllers.DoctorsController.deleteDoctor(id : Long)
+GET     /doctors/:id	             	controllers.DoctorsController.edit(id : Long)
+GET		/doctors/new					controllers.DoctorsController.create()
+POST	/doctors/save					controllers.DoctorsController.save()
+DELETE	/doctors/:id/delete				controllers.DoctorsController.delete(id : Long)
+
+GET     /users/js/routes		   		controllers.UsersController.javascriptRoutes()
+GET     /users/list	             		controllers.UsersController.listOfUsers()
+GET     /users/:id	             		controllers.UsersController.edit(id : Long)
+GET		/users/new						controllers.UsersController.create()
+POST	/users/save						controllers.UsersController.save()
+DELETE	/users/:id/delete				controllers.UsersController.delete(id : Long)
 
 GET		/patient/find_by_name			controllers.PatientsController.findPatientByName(mask : String)
 POST	/patient/save					controllers.PatientsController.savePatient()

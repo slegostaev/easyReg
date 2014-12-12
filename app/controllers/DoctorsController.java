@@ -24,7 +24,7 @@ public class DoctorsController extends Controller {
 		return ok(views.html.settings.doctors.render(Doctor.findAllDoctors()));
 	}
 	
-	public static Result showDoctor(Long id) {
+	public static Result edit(Long id) {
 		if (id == null) {
 			return badRequest("Id is incorrect!");
 		}
@@ -49,7 +49,7 @@ public class DoctorsController extends Controller {
     	return ok(views.html.doctor.show.render(doctor));
     }
 	
-	public static Result saveDoctor() {
+	public static Result save() {
 		Form<Doctor> doctorForm = Form.form(Doctor.class).bindFromRequest();
 		if (doctorForm.hasErrors()) {
 			return badRequest("Ошибка сохранения, все поля должны быть заполнены!");
@@ -65,17 +65,17 @@ public class DoctorsController extends Controller {
 		return badRequest("Ошибка сохранения, возможно такой доктор уже существует!");
     }
 	
-	public static Result createDoctor() {
+	public static Result create() {
     	return TODO;
     }
 	
-	public static Result deleteDoctor(Long id) {
+	public static Result delete(Long id) {
     	return TODO;
     }
 	
 	public static Result javascriptRoutes() {
         response().setContentType("text/javascript");
         return ok(Routes.javascriptRouter("jsRoutes",
-                controllers.routes.javascript.DoctorsController.saveDoctor()));
+                controllers.routes.javascript.DoctorsController.save()));
     }
 }

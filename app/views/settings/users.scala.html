@@ -1,13 +1,13 @@
-@(doctors : List[Doctor])
+@(users : List[User])
 <div>
-	<a href="#" onclick="createNewDoctor(); return false;">Добавить нового доктора</a>
+	<a href="#" onclick="createNewUser(); return false;">Добавить нового пользователя</a>
 </div>
 <ul>
-	@if(doctors != null) {
-		@for(doctor <- doctors) {
+	@if(users != null) {
+		@for(user <- users) {
 			<li>
-				<a href="@routes.DoctorsController.edit(doctor.id)">
-					@doctor.fullname
+				<a href="@routes.UsersController.edit(user.id)">
+					@user.fullname
 				</a>
 			</li>
 		}
@@ -16,11 +16,11 @@
 
 @components.userForm()
 
-<script type="text/javascript" src="@routes.DoctorsController.javascriptRoutes()"></script>
+<script type="text/javascript" src="@routes.UsersController.javascriptRoutes()"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#userForm').dialog({
-			title: 'Новый доктор',
+			title: 'Новый пользователь',
 			width: '500px',
 			resizable: true,
 			autoOpen: false,
@@ -29,7 +29,7 @@
 				text : 'Сохранить',
 				click: function() {
 					var dialog = $(this);
-					jsRoutes.controllers.DoctorsController.save()
+					jsRoutes.controllers.UsersController.saveDoctor()
 						.ajax({
 							data : $(this).serialize()
 						})
@@ -52,7 +52,7 @@
 		})
 	})
 	
-	function createNewDoctor() {
+	function createNewUser() {
 		$('#userForm').dialog('open');
 	}
 

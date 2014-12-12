@@ -260,7 +260,7 @@ function updateScheduleTimespans() {
 
 function setupDoctorTimespans(doctor) {
 	var unitId = getUnitIdByDoctorId(doctor.key);
-	if (doctor && doctor.workPeriods.length > 0) {
+	if (doctor && doctor.scheduleTemplates.length > 0) {
 		$.each(doctor.workPeriods, function(periodIndex, period) {
 			
 			if (period && period.workDays.length > 0) {
@@ -297,8 +297,8 @@ function parseWorkHours(sourceString) {
 }
 
 function getWorkDayForDoctor(doctor, date) {
-	if (doctor && doctor.workPeriods.length > 0) {
-		var period = $.grep(doctor.workPeriods, function(period) {
+	if (doctor && doctor.scheduleTemplates.length > 0) {
+		var period = $.grep(doctor.scheduleTemplates, function(period) {
 			var start_period = new Date(period.startPeriod);
 			var end_period = new Date(period.endPeriod);
 			return start_period <= date && date <= end_period;
