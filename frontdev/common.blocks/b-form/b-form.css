@@ -1,0 +1,47 @@
+.b-form {
+    margin: 0;
+}
+
+/*
+  Elements
+*/
+
+.b-form__header {}
+.b-form__controls {}
+.b-form__control {
+    margin: 10px;
+}
+.b-form__footer {}
+
+.b-form__title {
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 18pt;
+}
+
+
+/*
+   Modificators
+*/
+
+.b-form_stretch {
+    display: flex;
+    flex-flow: column;
+    align-content: stretch;
+}
+.b-form_stretch .b-form__control {
+    display: flex;
+    flex-flow: column;
+    align-content: stretch;
+}
+
+
+/*
+    Themes
+*/
+
+.dent-theme .b-form__title {
+    color: #447AA5;
+}
+
+

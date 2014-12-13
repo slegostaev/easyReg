@@ -1,0 +1,18 @@
+.b-auth-form {
+    width: 300px;
+
+    position: relative;
+    padding: 20px;
+
+    background: #F2F2F2;
+}
+
+
+/*
+    Themes
+*/
+
+.dent-theme .b-auth-form {
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 3px;
+}

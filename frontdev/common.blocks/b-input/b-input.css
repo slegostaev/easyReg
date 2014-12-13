@@ -1,0 +1,41 @@
+.b-input {
+    padding: 5px;
+}
+
+/*
+    Elements
+*/
+
+
+
+
+/*
+    Modificators
+*/
+
+.b-input_size_xl {
+    padding: 10px;
+    font-size: 12pt;
+}
+
+.b-input_size_xxl {
+    padding: 15px;
+    font-size: 12pt;
+}
+
+
+/*
+    Themes
+*/
+
+.dent-theme .b-input {
+    border: 1px solid #E2E2E2;
+    border-radius: 3px;
+    box-shadow: inset rgba(199, 194, 194, 0.3) 0px 1px 1px;
+}
+
+.dent-theme .b-input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(7, 149, 255, 0.3);
+    border: 1px solid rgb(187, 220, 245);
+}
