@@ -1,0 +1,22 @@
+{
+    "name": "easyReg",
+    "version": "0.0.1",
+    "description": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/slegostaev/easyReg.git"
+    },
+    "bugs": {
+        "url": "https://github.com/slegostaev/easyReg/issues"
+    },
+    "homepage": "https://github.com/slegostaev/easyReg",
+    "devDependencies": {
+
+        "gulp": 				"latest",
+        "gulp-order": 			"latest",
+        "gulp-concat": 			"latest",
+		"gulp-csso": 			"latest",
+		"gulp-watch":			"latest",
+        "gulp-autoprefixer": 	"latest"
+    }
+}
