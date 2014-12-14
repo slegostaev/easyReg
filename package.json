@@ -16,6 +16,7 @@
         "gulp-order": 			"latest",
         "gulp-concat": 			"latest",
 		"gulp-csso": 			"latest",
+		"gulp-uglify": 			"latest",
 		"gulp-watch":			"latest",
         "gulp-autoprefixer": 	"latest"
     }

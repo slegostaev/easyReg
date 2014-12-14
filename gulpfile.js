@@ -3,9 +3,10 @@ var gulp 			= require('gulp'),
 	concat 			= require("gulp-concat"),
 	watch 			= require('gulp-watch');
 	csso 			= require("gulp-csso"),
+	uglify 			= require("gulp-uglify"),
 	autoprefixer 	= require("gulp-autoprefixer");
 
-gulp.task('build', function() {
+gulp.task('build', function () {
 
 	gulp.
 		src("frontdev/**/*.css")
@@ -21,6 +22,13 @@ gulp.task('build', function() {
 		.pipe(csso())
 		.pipe(gulp.dest("public/stylesheets"));
 
+});
+
+gulp.task('build-dhtmlx', function () {
+	gulp.src("frontdev/libs/dhtmlx/**/*.js")
+		.pipe(concat("dhtmlx.js"))
+		.pipe(uglify())
+		.pipe(gulp.dest("public/javascripts"));
 });
 
 gulp.task("watch", function () {
