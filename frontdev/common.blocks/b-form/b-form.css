@@ -5,19 +5,23 @@
 /*
   Elements
 */
-
-.b-form__header {}
+.b-form__content {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+.b-form__title {
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 18pt;
+    font-weight: bold;
+}
 .b-form__controls {}
 .b-form__control {
     margin: 10px;
 }
 .b-form__footer {}
 
-.b-form__title {
-    text-align: center;
-    margin: 0 0 10px 0;
-    font-size: 18pt;
-}
 
 
 /*
@@ -40,7 +44,7 @@
     Themes
 */
 
-.dent-theme .b-form__title {
+.theme-dent .b-form__title {
     color: #447AA5;
 }
 

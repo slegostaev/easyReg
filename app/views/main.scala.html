@@ -1,8 +1,8 @@
-@(content: Html)
+@(header: Html)(content: Html)
 
 <!DOCTYPE html>
 
-<html class='b-html dent-theme'>
+<html class='b-html theme-dent'>
     <head>
         <title>easyReg</title>
         <link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/main.css")'>
@@ -11,8 +11,8 @@
     </head>
     <body class='b-body b-page'>
         <section class='b-layout'>
-            <div class='b-layout__header'></div>
-            <div class='b-layout__content b-layout__content_align_center'>@content</div>
+            <div class='b-layout__header'>@header</div>
+            <div class='b-layout__content b-layout__content_vcentered'>@content</div>
             <div class='b-layout__footer'></div>
         </section>
     </body>

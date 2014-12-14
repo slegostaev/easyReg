@@ -1,15 +1,15 @@
 @(loginForm : Form[Application.LoginForm])
 
-@main {
-
+@main(headers.login()) {
 	<form class='b-auth-form b-form b-form_stretch'action='@routes.Application.auth' method='post'>
-        <header class='b-form__header'><h1 class='b-form__title'>Войдите в систему</h1></header>
-        <div class='b-form__controls'>
-            <div class='b-form__control'><input  class='b-input  b-input_size_xl'  type='text' id='login' name='login' value='@loginForm("login").value' placeholder="Логин" required='required'/></div>
-            <div class='b-form__control'><input  class='b-input  b-input_size_xl'  type='password' id='password' name='password' autocomplete='off' placeholder="Пароль" required='required'/></div>
-            <div class='b-form__control'><button class='b-button b-button_type_primary b-button_size_xl' type='submit'>Войти</button></div>
-        </div>
+        <fieldset class='b-form__content'>
+            <legend class='b-form__title'>Войдите в систему</legend>
+            <div class='b-form__controls'>
+                <div class='b-form__control'><input  class='b-input  b-input_size_xl'  type='text' id='login' name='login' value='@loginForm("login").value' placeholder="Логин" required='required'/></div>
+                <div class='b-form__control'><input  class='b-input  b-input_size_xl'  type='password' id='password' name='password' autocomplete='off' placeholder="Пароль" required='required'/></div>
+                <div class='b-form__control'><button class='b-button b-button_type_primary b-button_size_xl' type='submit'>Войти</button></div>
+            </div>
+        </fieldset>
         <footer class='b-form__footer'></footer>
 	</form>
-
 }

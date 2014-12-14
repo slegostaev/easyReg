@@ -1,0 +1,27 @@
+.b-logo {
+    width: 100px;
+    height: 100px;
+
+    position: relative;
+    margin: 20px;
+
+    background: #4573cc;
+    border-radius: 100px;
+}
+
+
+/*
+  Elements
+*/
+
+/*
+   Modificators
+*/
+
+.b-logo_auth {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -50px;
+}
+
