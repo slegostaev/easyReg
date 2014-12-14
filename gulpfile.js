@@ -26,8 +26,14 @@ gulp.task('build', function () {
 
 gulp.task('build-dhtmlx', function () {
 	gulp.src("frontdev/libs/dhtmlx/**/*.js")
+		.pipe(order([
+			"scheduler/dhtmlxscheduler.js",
+			"scheduler/ext/*.js",
+			"locale/**/*.js",
+			"common/**/*.js"
+		]))
 		.pipe(concat("dhtmlx.js"))
-		.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(gulp.dest("public/javascripts"));
 });
 
