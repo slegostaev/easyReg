@@ -1,6 +1,7 @@
 @(loginForm : Form[Application.LoginForm])
 
 @main(headers.login()) {
+    <div class="b-logo"></div>
 	<form class='b-auth-form b-form b-form_stretch'action='@routes.Application.auth' method='post'>
         <fieldset class='b-form__content'>
             <legend class='b-form__title'>Войдите в систему</legend>
