@@ -1,0 +1,5 @@
+@(routeControllerName: String = null, methodName: String = null)(content: => Html)
+
+@if(com.legossoft.security.core.CheckAccessHandler.hasAccess(routeControllerName, methodName)) {
+	@content
+}
