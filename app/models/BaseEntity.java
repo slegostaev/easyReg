@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class BaseEntity extends Model {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(value = "key")
     public Long id;
 

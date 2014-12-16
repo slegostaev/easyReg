@@ -1,0 +1,14 @@
+@(group : Group)
+<div>
+	<label>Название группы: </label>
+	<span>@group.name</span>
+	<a href="@routes.GroupsController.edit(group.id)">Редактировать</a>
+	<a href="@routes.GroupsController.index">Вернуться к списку групп</a>
+</div>
+
+<div>
+	@if(group.id != null) {
+		<a href="@routes.GroupsController.usersGroup(group.id)">Пользователи группы</span>
+		<a href="@routes.GroupsController.permissionsGroup(group.id)">Разрешения</span>
+	}
+</div>

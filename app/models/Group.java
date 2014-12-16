@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import play.data.validation.Constraints.Required;
+
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,7 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "groups")
 public class Group extends BaseEntity {
-
+	
+	@Required
 	@Column(unique = true, nullable = false, length = 100)
 	public String name;
 	

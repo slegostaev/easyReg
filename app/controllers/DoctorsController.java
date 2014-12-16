@@ -9,6 +9,8 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import com.legossoft.security.core.Access;
 /**
  * @author "SLegostaev"
  *
@@ -20,10 +22,12 @@ public class DoctorsController extends Controller {
     	return ok(Json.toJson(Doctor.findAllDoctors()));
     }
 	
-	public static Result listOfDoctors() {
+	@Access(description = "Доступ к списку докторов")
+	public static Result index() {
 		return ok(views.html.settings.doctors.render(Doctor.findAllDoctors()));
 	}
 	
+	@Access(description = "Редактирование данных докторов")
 	public static Result edit(Long id) {
 		if (id == null) {
 			return badRequest("Id is incorrect!");
@@ -65,10 +69,12 @@ public class DoctorsController extends Controller {
 		return badRequest("Ошибка сохранения, возможно такой доктор уже существует!");
     }
 	
+	@Access(description = "Создание докторов")
 	public static Result create() {
     	return TODO;
     }
 	
+	@Access(description = "Удаление докторов")
 	public static Result delete(Long id) {
     	return TODO;
     }

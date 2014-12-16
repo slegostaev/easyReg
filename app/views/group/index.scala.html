@@ -1,0 +1,15 @@
+@(groups : List[Group])
+
+<a href="@routes.GroupsController.create">Создать новую группу</a>
+
+<ul>
+	@if(groups != null) {
+		@for(group <- groups) {
+			<li>
+				<a href="@routes.GroupsController.view(group.id)">
+					@group.name
+				</a>
+			</li>
+		}
+	}
+</ul>

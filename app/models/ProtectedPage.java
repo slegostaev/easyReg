@@ -60,8 +60,6 @@ public class ProtectedPage extends BaseEntity {
 	
 	public static ProtectedPage pageByClassAndMethod(String className, String methodName) {
 		return Ebean.find(ProtectedPage.class).where().eq("class_name", className).eq("method_name", methodName).findUnique();
-//		List<ProtectedPage> pages = Ebean.find(ProtectedPage.class).where().eq("class_name", className).eq("method_name", methodName).findList();
-//		return pages.size() > 0 ? pages.get(0) : null;
 	}
 	
 	/* (non-Javadoc)

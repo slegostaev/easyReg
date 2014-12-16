@@ -30,16 +30,20 @@ public class SecurityUtil {
 	
 	public static final String SESSION_ID = "session_id";
 	
+	private static Set<Method> methods = null;
+	
 	public static Set<Method> getProtectedMethods() {
 		Reflections reflections = new Reflections(
                 new ConfigurationBuilder()
                 .addUrls(ClasspathHelper.forPackage("controllers", Play.application().classloader()))
                 .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("controllers" + ".")))
                 .setScanners(new MethodAnnotationsScanner(), new MethodAnnotationsScanner()));
-		Set<Method> methods = reflections.getMethodsAnnotatedWith(Access.class);
-		for (Method method : methods) {
-			Access a = method.getAnnotation(Access.class);
-			Logger.debug(method.getDeclaringClass().getCanonicalName() + ":" +method.getName() + " " + a.description()); 
+		if (methods == null) {
+			methods = reflections.getMethodsAnnotatedWith(Access.class);
+			for (Method method : methods) {
+				Access a = method.getAnnotation(Access.class);
+				Logger.debug(method.getDeclaringClass().getCanonicalName() + ":" +method.getName() + " " + a.description()); 
+			}
 		}
 		return methods;
 	}
