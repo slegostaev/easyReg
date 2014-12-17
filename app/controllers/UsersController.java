@@ -18,7 +18,7 @@ public class UsersController extends Controller {
 	private static Form<User> userForm = Form.form(User.class);
 	
 	public static Result listOfUsers() {
-		return ok(views.html.settings.users.render(User.findAllUsers()));
+		return ok(views.html.pages.settings.users.index.usersSettingsMain.render(User.findAllUsers()));
 	}
 	
 	public static Result create() {

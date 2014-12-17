@@ -1,19 +1,23 @@
-@(header: Html)(content: Html)
+@(styles: Html)(jsLibs: Html)(header: Html)(footer: Html)(content: Html)
 
 <!DOCTYPE html>
 
 <html class='b-html theme-dent'>
     <head>
         <title>easyReg</title>
+        @styles
         <link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/main.css")'>
         <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
-        <script src='@routes.Assets.at("javascripts/jquery-1.10.2.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("javascripts/libs/jquery/jquery.min.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("javascripts/libs/jquery/jquery-ui.custom.min.js")' type='text/javascript'></script>
+        <script src='@routes.Assets.at("javascripts/libs/moment/moment.min.js")' type='text/javascript'></script>
+        @jsLibs
     </head>
     <body class='b-body b-page'>
         <section class='b-layout'>
-            <div class='b-layout__header'>@header</div>
-            <div class='b-layout__content b-layout__content_hcentered'>@content</div>
-            <div class='b-layout__footer'></div>
+            @header
+            @content
+            @footer
         </section>
     </body>
 </html>

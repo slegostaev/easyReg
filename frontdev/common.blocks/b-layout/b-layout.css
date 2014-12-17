@@ -19,7 +19,7 @@
     box-sizing: border-box;
 
     display: flex;
-    flex: 1 150px;
+    flex: 1 50px;
 
 }
 .b-layout__content {

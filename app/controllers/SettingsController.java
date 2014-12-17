@@ -14,6 +14,6 @@ import play.mvc.Result;
 public class SettingsController extends Controller {
 	
 	public static Result index() {
-		return ok(views.html.settings.tabMenu.render());
+		return ok(views.html.pages.settings.main.index.mainSettingsContent.render());
 	}
 }

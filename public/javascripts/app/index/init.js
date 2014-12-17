@@ -144,7 +144,7 @@ $(function() {
 //		return true;
 //	});
 
-	/*jsRoutes.controllers.DoctorsController.getAllDoctorsJSON().ajax()
+jsRoutes.controllers.DoctorsController.getAllDoctorsJSON().ajax()
 		.done(function(doctors) {
 			setDoctors(doctors);
 			scheduler.createUnitsView({
@@ -170,7 +170,8 @@ $(function() {
 
 			updateScheduler();
 			updateScheduleTimespans();
-		})*/
+		})
+
 	scheduler.attachEvent("onClick", function(id, e){
 		scheduler.showLightbox(id);
 	});
@@ -327,7 +328,7 @@ function getWorkDayByIndex(workDays, dayIndex) {
 function updateScheduler() {
 	var state = scheduler.getState();
 	scheduler.clearAll();
-	scheduler.init('scheduler_here', state.date === undefined ? new Date() : state.date, state.mode === undefined ? "unit" : state.mode);
+	scheduler.init('schedule', state.date === undefined ? new Date() : state.date, state.mode === undefined ? "unit" : state.mode);
 	scheduler.load('/receptions/get_all', 'json');
 }
 

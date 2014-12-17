@@ -21,11 +21,11 @@ public class Application extends Controller {
 	
 	@Access(description = "Таблица с расписанием врачей")
     public static Result index() {
-        return ok(views.html.index.render());
+        return ok(views.html.pages.index.indexMain.render());
     }
 
     public static Result login() {
-    	return ok(views.html.login.render(loginForm));
+    	return ok(views.html.pages.login.loginMain.render(loginForm));
     }
     
     public static class LoginForm {
@@ -43,13 +43,13 @@ public class Application extends Controller {
     	Form<LoginForm> bindedForm = loginForm.bindFromRequest();
     	if (bindedForm.hasErrors()) {
     		flash("error", "Имя пользователя или пароль должны быть заполнены");
-    		return unauthorized(views.html.login.render(bindedForm));
+    		return unauthorized(views.html.pages.login.loginMain.render(bindedForm));
     	}
     	
     	User user = User.authenticate(bindedForm.get().login, bindedForm.get().password);
     	if (user == null) {
     		flash("error", "Имя пользователя или пароль введен не правильно.");
-    		return unauthorized(views.html.login.render(bindedForm));
+    		return unauthorized(views.html.pages.login.loginMain.render(bindedForm));
     	}
     	
     	final String sessionId = SecurityUtil.generateSessionId(user);

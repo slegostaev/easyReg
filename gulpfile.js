@@ -33,8 +33,8 @@ gulp.task('build-dhtmlx', function () {
 			"common/**/*.js"
 		]))
 		.pipe(concat("dhtmlx.js"))
-		//.pipe(uglify())
-		.pipe(gulp.dest("public/javascripts"));
+		.pipe(uglify())
+		.pipe(gulp.dest("public/javascripts/libs/dhtmlx"));
 });
 
 gulp.task("watch", function () {

@@ -21,9 +21,9 @@ public class DoctorsController extends Controller {
     }
 	
 	public static Result listOfDoctors() {
-		return ok(views.html.settings.doctors.render(Doctor.findAllDoctors()));
+		return ok(views.html.pages.settings.doctors.index.doctorsSettingsMain.render(Doctor.findAllDoctors()));
 	}
-	
+
 	public static Result edit(Long id) {
 		if (id == null) {
 			return badRequest("Id is incorrect!");
@@ -46,7 +46,7 @@ public class DoctorsController extends Controller {
 //			}
 //		}
 		
-    	return ok(views.html.doctor.show.render(doctor));
+    	return ok(views.html.pages.settings.doctors.edit.doctorsSettingsMain.render(doctor));
     }
 	
 	public static Result save() {
