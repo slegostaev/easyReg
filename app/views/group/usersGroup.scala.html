@@ -1,6 +1,8 @@
 @(group: Group, users : List[User])
 
-<div><a href="@routes.GroupsController.view(group.id)">Вернуться в группу</a></div>
+@checkAccess("controllers.GroupsController.view") {
+	<div><a href="@routes.GroupsController.view(group.id)">Вернуться в группу</a></div>
+}
 
 <div>
 	<span>Пользователи группы</span>
@@ -9,7 +11,9 @@
 		@for(user <- group.users) {
 			<li>
 				@user.fullname 
-				<a href="@routes.GroupsController.deleteUserFromGroup(group.id, user.id)">Удалить</a>
+				@checkAccess("controllers.GroupsController.deleteUserFromGroup") {
+					<a href="@routes.GroupsController.deleteUserFromGroup(group.id, user.id)">Удалить</a>
+				}
 			</li>
 		}
 	</ul>
@@ -22,7 +26,9 @@
 		@for(user <- users) {
 			<li>
 				@user.fullname 
-				<a href="@routes.GroupsController.addUserToGroup(group.id, user.id)">Добавить</a>
+				@checkAccess("controllers.GroupsController.addUserToGroup") {
+					<a href="@routes.GroupsController.addUserToGroup(group.id, user.id)">Добавить</a>
+				}
 			</li>
 		}
 	</ul>

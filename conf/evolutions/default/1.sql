@@ -49,12 +49,11 @@ create table patients (
 create table protected_pages (
   id                        bigint auto_increment not null,
   creator_id                bigint,
-  class_name                varchar(100) not null,
-  method_name               varchar(100) not null,
-  description               varchar(250),
+  method_name               varchar(200) not null,
+  description               varchar(250) not null,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint uq_protected_pages_1 unique (class_name,method_name),
+  constraint uq_protected_pages_method_name unique (method_name),
   constraint pk_protected_pages primary key (id))
 ;
 

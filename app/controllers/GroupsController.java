@@ -6,6 +6,7 @@ package controllers;
 import java.util.List;
 
 import models.Group;
+import models.ProtectedPage;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
@@ -76,14 +77,32 @@ public class GroupsController extends Controller {
 	
 	@Access(description = "Просмотр разрешений группы")
 	public static Result permissionsGroup(Long id) {
-		return TODO;
+		Group group = Group.findById(id, Group.class);
+		List<ProtectedPage> pages = ProtectedPage.findAll(ProtectedPage.class);
+		pages.removeAll(group.allowPages);
+		return ok(views.html.group.permissionsGroup.render(group, pages));
+	}
+	
+	@Access(description = "Удаление разрешений группы")
+	public static Result deletePermissionFromGroup(Long groupId, Long permissionId) {
+		Group group = Group.findById(groupId, Group.class);
+		ProtectedPage page = ProtectedPage.findById(permissionId, ProtectedPage.class);
+		group.allowPages.remove(page);
+		Ebean.update(group);
+		return redirect(routes.GroupsController.permissionsGroup(groupId));
+	}
+	
+	@Access(description = "Добавление новых разрешений группы")
+	public static Result addPermissionToGroup(Long groupId, Long permissionId) {
+		Group group = Group.findById(groupId, Group.class);
+		ProtectedPage page = ProtectedPage.findById(permissionId, ProtectedPage.class);
+		group.allowPages.add(page);
+		Ebean.update(group);
+		return redirect(routes.GroupsController.permissionsGroup(groupId));
 	}
 	
 	@Access(description = "Удаление пользователей из группы")
 	public static Result deleteUserFromGroup(Long groupId, Long userId) {
-//		SqlUpdate query = Ebean.createSqlUpdate("delete from group_members where group_id = :groupId and user_id = :userId")
-//			.setParameter("groupId", groupId).setParameter("userId", userId);
-//		query.execute();
 		Group group = Group.findById(groupId, Group.class);
 		User user = User.findById(userId, User.class);
 		group.users.remove(user);

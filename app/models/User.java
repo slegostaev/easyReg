@@ -69,12 +69,4 @@ public class User extends BaseUser {
 		return Ebean.find(User.class).where().eq("login", login.toLowerCase()).eq("password", password).findUnique();
 	}
     
-    /* (non-Javadoc)
-     * @see play.db.ebean.Model#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-    	User user = (User) obj;
-    	return id != null && id.equals(user.id);
-    }
 }

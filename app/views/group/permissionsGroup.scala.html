@@ -1,0 +1,35 @@
+@(group: Group, pages : List[ProtectedPage])
+
+@checkAccess("controllers.GroupsController.view") {
+<div><a href="@routes.GroupsController.view(group.id)">Вернуться в группу</a></div>
+}
+
+<div>
+	<span>Разрешения группы</span>
+	
+	<ul>
+		@for(page <- group.allowPages) {
+			<li>
+				@page.description
+				@checkAccess("controllers.GroupsController.deletePermissionFromGroup") {
+					<a href="@routes.GroupsController.deletePermissionFromGroup(group.id, page.id)">Удалить</a>
+				}
+			</li>
+		}
+	</ul>
+</div>
+
+<div>
+	<span>Разрешения не входящие в группу</span>
+	
+	<ul>
+		@for(page <- pages) {
+			<li>
+				@page.description
+				@checkAccess("controllers.GroupsController.addPermissionToGroup") {
+					<a href="@routes.GroupsController.addPermissionToGroup(group.id, page.id)">Добавить</a>
+				}
+			</li>
+		}
+	</ul>
+</div>

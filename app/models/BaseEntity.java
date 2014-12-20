@@ -55,4 +55,13 @@ public abstract class BaseEntity extends Model {
     public static <T> T findById(Long id, Class<T> classType) {
     	return Ebean.find(classType, id);
     }
+    
+    /* (non-Javadoc)
+     * @see play.db.ebean.Model#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+    	BaseEntity entity = (BaseEntity) obj;
+    	return id != null && id.equals(entity.id);
+    }
 }
