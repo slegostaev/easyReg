@@ -1,0 +1,29 @@
+@(group: Group, users : List[User])
+
+<div><a href="@routes.GroupsController.view(group.id)">Вернуться в группу</a></div>
+
+<div>
+	<span>Пользователи группы</span>
+	
+	<ul>
+		@for(user <- group.users) {
+			<li>
+				@user.fullname 
+				<a href="@routes.GroupsController.deleteUserFromGroup(group.id, user.id)">Удалить</a>
+			</li>
+		}
+	</ul>
+</div>
+
+<div>
+	<span>Пользователи не входящие в группу</span>
+	
+	<ul>
+		@for(user <- users) {
+			<li>
+				@user.fullname 
+				<a href="@routes.GroupsController.addUserToGroup(group.id, user.id)">Добавить</a>
+			</li>
+		}
+	</ul>
+</div>

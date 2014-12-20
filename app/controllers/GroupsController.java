@@ -3,7 +3,10 @@
  */
 package controllers;
 
+import java.util.List;
+
 import models.Group;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -65,12 +68,36 @@ public class GroupsController extends Controller {
 	
 	@Access(description = "Просмотр пользователей группы")
 	public static Result usersGroup(Long id) {
-		return TODO;
+		Group group = Group.findById(id, Group.class);
+		List<User> users = User.findAllUsers();
+		users.removeAll(group.users);
+		return ok(views.html.group.usersGroup.render(group, users));
 	}
 	
 	@Access(description = "Просмотр разрешений группы")
 	public static Result permissionsGroup(Long id) {
 		return TODO;
+	}
+	
+	@Access(description = "Удаление пользователей из группы")
+	public static Result deleteUserFromGroup(Long groupId, Long userId) {
+//		SqlUpdate query = Ebean.createSqlUpdate("delete from group_members where group_id = :groupId and user_id = :userId")
+//			.setParameter("groupId", groupId).setParameter("userId", userId);
+//		query.execute();
+		Group group = Group.findById(groupId, Group.class);
+		User user = User.findById(userId, User.class);
+		group.users.remove(user);
+		Ebean.update(group);
+		return redirect(routes.GroupsController.usersGroup(groupId));
+	}
+	
+	@Access(description = "Добавление пользователей в группу")
+	public static Result addUserToGroup(Long groupId, Long userId) {
+		Group group = Group.findById(groupId, Group.class);
+		User user = User.findById(userId, User.class);
+		group.users.add(user);
+		Ebean.update(group);
+		return redirect(routes.GroupsController.usersGroup(groupId));
 	}
 	
 }
