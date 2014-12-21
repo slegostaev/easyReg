@@ -1,5 +1,34 @@
 @(doctors : List[Doctor])
 
-@pages.settings.mainSettings {
-    <h1>Список докторов</h1>
+@pages.settings.mainSettings("doctors") {
+    <h1 class="b-settings__title">Список докторов</h1>
+    <div class="b-settings__content-wrapper">
+        <ul class="b-cards">
+            <li class="b-cards__item"></li>
+            <li class="b-cards__item"></li>
+            <li class="b-cards__item"></li>
+            <li class="b-cards__item"></li>
+            <li class="b-cards__item"></li>
+        </ul>
+    </div>
+
+    <!--<div>
+        @checkAccess("controllers.DoctorsController.create") {
+        <a href="@routes.DoctorsController.create">Добавить нового доктора</a>
+        }
+    </div>
+    <ul>
+        @if(doctors != null) {
+            @for(doctor <- doctors) {
+                <li>
+                    @doctor.fullname
+                    @checkAccess("controllers.DoctorsController.view") {
+                    <a href="@routes.DoctorsController.view(doctor.id)">
+                        Детали
+                    </a>
+                    }
+                </li>
+            }
+        }
+    </ul>-->
 }

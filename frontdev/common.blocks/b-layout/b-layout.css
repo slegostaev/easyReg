@@ -20,6 +20,7 @@
     flex: 1 1 50px;
 
 }
+
 .b-layout__content {
     position: relative;
     display: flex;
@@ -29,6 +30,7 @@
     justify-content: flex-start;
 
 }
+
 .b-layout__footer {
     position: relative;
     display: flex;
@@ -36,7 +38,6 @@
     padding: 10px;
     flex: 1 50px;
 }
-
 
 /*
     Modificators
@@ -46,8 +47,7 @@
     flex-grow: 0;
 }
 
-
-.b-layout__footer_fixed-height {
+ .b-layout__footer_fixed-height {
     flex-grow: 0;
 }
 

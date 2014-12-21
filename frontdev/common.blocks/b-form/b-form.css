@@ -5,24 +5,26 @@
 /*
   Elements
 */
+
 .b-form__content {
     border: none;
     padding: 0;
     margin: 0;
 }
+
 .b-form__title {
     text-align: center;
     margin: 0 0 10px 0;
     font-size: 18pt;
     font-weight: bold;
 }
+
 .b-form__controls {}
 .b-form__control {
     margin: 10px;
 }
+
 .b-form__footer {}
-
-
 
 /*
    Modificators
@@ -33,12 +35,12 @@
     flex-flow: column;
     align-content: stretch;
 }
+
 .b-form_stretch .b-form__control {
     display: flex;
     flex-flow: column;
     align-content: stretch;
 }
-
 
 /*
     Themes

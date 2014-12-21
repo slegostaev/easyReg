@@ -5,7 +5,6 @@
     background: linear-gradient(to bottom, #499bea 90%, #207ce5 100%);
 }
 
-
 /*
     Elements
 */
@@ -34,11 +33,9 @@
     background: #227de5
 }
 
-
 /*
     Modificators
 */
-
 
 .b-action-panel__button_active {
     background: #227de5

@@ -1,18 +1,23 @@
-@(contentSettings : Html)
+@(activeItem: String)(contentSettings: Html)
 
 @main(pages.settings.index.indexSettingsStyles())(pages.settings.index.indexJsLibs())(pages.settings.index.indexSettingsHeader())(pages.settings.index.indexSettingsFooter()) {
     <div class='b-settings b-layout__content'>
         <nav class='b-menu b-settings__menu b-layout__content-left-side'>
-            <a class='b-menu__link' href='@routes.SettingsController.index'>Настройки приложения</a>
+
+            <a class='b-menu__link @if(activeItem == "application") { b-menu__link_active }' href='@routes.SettingsController.index'>Настройки приложения</a>
+
             @checkAccess("controllers.UsersController.index") {
-            <a class='b-menu__link' href='@routes.UsersController.index'>Список пользователей</a>
+            <a class='b-menu__link @if(activeItem == "users") { b-menu__link_active }' href='@routes.UsersController.index'>Список пользователей</a>
             }
+
             @checkAccess("controllers.DoctorsController.index") {
-            <a class='b-menu__link' href='@routes.DoctorsController.index'>Список докторов</a>
+            <a class='b-menu__link @if(activeItem == "doctors") { b-menu__link_active }' href='@routes.DoctorsController.index'>Список докторов</a>
             }
+
             @checkAccess("controllers.GroupsController.index") {
-            <a class='b-menu__link' href='@routes.GroupsController.index'>Группы</a>
+            <a class='b-menu__link @if(activeItem == "groups") { b-menu__link_active }' href='@routes.GroupsController.index'>Группы</a>
             }
+
         </nav>
         <div class='b-settings__content b-layout__content-right-side'>
             @contentSettings

@@ -3,7 +3,6 @@
     flex-flow: row wrap;
     align-content: flex-start;
     border-right: 1px solid #c5daf2;
-
 }
 
 /*
@@ -15,14 +14,19 @@
     flex: 1 1 100%;
     padding: 10px;
     border-bottom: 1px solid #c5daf2;
+    color:#285479;
 }
+
 .b-menu__link:hover {
     background: rgba(0,0,0,0.05);
 }
 
-
-
-
 /*
     Modificators
 */
+
+.b-menu__link_active,
+.b-menu__link_active:hover {
+    background: #2369b8;
+    color: #fff;
+}
