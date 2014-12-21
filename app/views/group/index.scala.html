@@ -4,16 +4,18 @@
 	<a href="@routes.GroupsController.create">Создать новую группу</a>
 }
 
-@checkAccess("controllers.GroupsController.view") {
-	<ul>
-		@if(groups != null) {
-			@for(group <- groups) {
-				<li>
+
+<ul>
+	@if(groups != null) {
+		@for(group <- groups) {
+			<li>
+				@group.name
+				@checkAccess("controllers.GroupsController.view") {
 					<a href="@routes.GroupsController.view(group.id)">
-						@group.name
+						Детали
 					</a>
-				</li>
-			}
+				}
+			</li>
 		}
-	</ul>
-}
+	}
+</ul>

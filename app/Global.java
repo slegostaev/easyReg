@@ -7,6 +7,10 @@ import models.ProtectedPage;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.libs.F.Promise;
+import play.mvc.Http.RequestHeader;
+import play.mvc.Result;
+import play.mvc.Results;
 
 import com.avaje.ebean.Ebean;
 import com.legossoft.security.core.Access;
@@ -44,5 +48,15 @@ public class Global extends GlobalSettings {
 			}
 		}
 		super.beforeStart(arg0);
+	}
+	
+	/* (non-Javadoc)
+	 * @see play.GlobalSettings#onError(play.mvc.Http.RequestHeader, java.lang.Throwable)
+	 */
+	@Override
+	public Promise<Result> onError(RequestHeader requestHeader, Throwable throwable) {
+		return Promise.<Result>pure(	Results.internalServerError(
+				views.html.error.render(throwable.toString())
+	        ));
 	}
 }

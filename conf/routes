@@ -18,8 +18,9 @@ DELETE	/reception/:id/delete				controllers.ReceptionsController.deleteReception
 #ajax that return json
 GET     /ajax/get_all_doctors           controllers.DoctorsController.getAllDoctorsJSON()
 
-GET     /doctor/js/routes		   		controllers.DoctorsController.javascriptRoutes()
+#GET     /doctor/js/routes		   		controllers.DoctorsController.javascriptRoutes()
 GET     /doctors		             	controllers.DoctorsController.index()
+GET     /doctor/:id/view          		controllers.DoctorsController.view(id : Long)
 GET     /doctor/:id/edit          		controllers.DoctorsController.edit(id : Long)
 GET		/doctor/new						controllers.DoctorsController.create()
 POST	/doctor/save					controllers.DoctorsController.save()
@@ -27,7 +28,7 @@ DELETE	/doctor/:id/delete				controllers.DoctorsController.delete(id : Long)
 
 GET     /user/js/routes		   			controllers.UsersController.javascriptRoutes()
 GET     /users		             		controllers.UsersController.index()
-GET     /user/:id/edit	             		controllers.UsersController.edit(id : Long)
+GET     /user/:id/edit	             	controllers.UsersController.edit(id : Long)
 GET		/user/new						controllers.UsersController.create()
 POST	/user/save						controllers.UsersController.save()
 DELETE	/user/:id/delete				controllers.UsersController.delete(id : Long)
