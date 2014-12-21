@@ -1,0 +1,10 @@
+.b-footer {
+    padding: 0;
+    border-top: 1px solid #d0dfeb;
+    background: linear-gradient(to top,#f2f9ff 90%,#ceddea 100%);
+    color: #90a9be;
+    font-size: 12px;
+    flex-basis: 30px;
+    justify-content: center;
+    align-items: center;
+}
