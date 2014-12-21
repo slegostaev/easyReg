@@ -1,0 +1,45 @@
+.b-action-panel {
+    padding: 0;
+    flex-basis: 50px;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, #499bea 90%, #207ce5 100%);
+}
+
+
+/*
+    Elements
+*/
+
+.b-action-panel__item {
+    display: flex;
+}
+
+.b-action-panel__button {
+    display: flex;
+    align-items: center;
+    border: none;
+    text-decoration: none;
+    font-size: 30px;
+    color: #fff;
+    padding: 0 15px;
+    border-left: 1px solid #227de5;
+    border-right: 1px solid #227de5;
+}
+
+.b-action-panel__button+.b-action-panel__button {
+    border-left: none;
+}
+
+.b-action-panel__button:hover {
+    background: #227de5
+}
+
+
+/*
+    Modificators
+*/
+
+
+.b-action-panel__button_active {
+    background: #227de5
+}

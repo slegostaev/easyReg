@@ -1,3 +1,15 @@
 .b-header {
 
 }
+
+/*
+   Elements
+*/
+
+/*
+   Modificators
+*/
+
+.b-header_fixed-height {
+    flex-grow: 0;
+}

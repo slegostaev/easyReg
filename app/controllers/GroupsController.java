@@ -25,7 +25,7 @@ public class GroupsController extends Controller {
 	
 	@Access(description = "Доступ к списку групп пользователей")
 	public static Result index() {
-		return ok(views.html.group.index.render(Group.findAll(Group.class)));
+		return ok(views.html.pages.settings.groups.index.groupsSettingsMain.render(Group.findAll(Group.class)));
 	}
 	
 	@Access(description = "Создание групп пользователей")

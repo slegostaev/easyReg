@@ -1,0 +1,16 @@
+.b-settings {
+    flex-flow: row nowrap;
+}
+
+.b-settings__menu {
+    flex: 1 0 250px;
+    background: #e7f4ff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.b-settings__content {
+    flex: 1 1 100%;
+    background: #fff;
+}

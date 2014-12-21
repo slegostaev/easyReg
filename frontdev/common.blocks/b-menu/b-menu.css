@@ -1,0 +1,28 @@
+.b-menu {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    border-right: 1px solid #c5daf2;
+
+}
+
+/*
+    Elements
+*/
+
+.b-menu__link {
+    text-decoration: none;
+    flex: 1 1 100%;
+    padding: 10px;
+    border-bottom: 1px solid #c5daf2;
+}
+.b-menu__link:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+
+
+
+/*
+    Modificators
+*/
