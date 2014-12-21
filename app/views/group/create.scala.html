@@ -1,0 +1,13 @@
+@(groupForm : Form[Group])
+
+<form action="@routes.GroupsController.save" method="post">
+
+	@if(groupForm("id").value != null) {
+		<input type="hidden" value="@groupForm("id").value">
+	}
+	
+	<input type="text" name="name" value="@groupForm("name").value" maxlength="100" required="required">
+	
+	<button type="submit">Сохранить</button>
+	<a href="@routes.GroupsController.index">Выйти без сохранения</button>
+</form>

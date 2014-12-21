@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table clinics (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   name                      varchar(100) not null,
   start_work                time,
@@ -16,7 +16,7 @@ create table clinics (
 ;
 
 create table groups (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   name                      varchar(100) not null,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
@@ -26,7 +26,7 @@ create table groups (
 ;
 
 create table patients (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
@@ -47,19 +47,18 @@ create table patients (
 ;
 
 create table protected_pages (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
-  class_name                varchar(100) not null,
-  method_name               varchar(100) not null,
-  description               varchar(250),
+  method_name               varchar(200) not null,
+  description               varchar(250) not null,
   create_date               TIMESTAMP default CURRENT_TIMESTAMP not null,
   updated_date              TIMESTAMP default CURRENT_TIMESTAMP not null,
-  constraint uq_protected_pages_1 unique (class_name,method_name),
+  constraint uq_protected_pages_method_name unique (method_name),
   constraint pk_protected_pages primary key (id))
 ;
 
 create table receptions (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   patient_id                bigint,
   doctor_id                 bigint,
@@ -74,7 +73,7 @@ create table receptions (
 ;
 
 create table schedule_templates (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   doctor_id                 bigint,
   start_period              timestamp not null,
@@ -93,7 +92,7 @@ create table sessions (
 ;
 
 create table time_list (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   work_day_id               bigint,
   start_time                time not null,
@@ -105,7 +104,7 @@ create table time_list (
 
 create table users (
   user_type                 integer(31) not null,
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   firstname                 varchar(255) not null,
   surname                   varchar(255) not null,
@@ -130,7 +129,7 @@ create table users (
 ;
 
 create table work_days (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   creator_id                bigint,
   start_work                time,
   end_work                  time,
@@ -156,25 +155,7 @@ create table group_members (
   user_id                        bigint not null,
   constraint pk_group_members primary key (group_id, user_id))
 ;
-create sequence clinics_seq;
-
-create sequence groups_seq;
-
-create sequence patients_seq;
-
-create sequence protected_pages_seq;
-
-create sequence receptions_seq;
-
-create sequence schedule_templates_seq;
-
 create sequence sessions_seq;
-
-create sequence time_list_seq;
-
-create sequence users_seq;
-
-create sequence work_days_seq;
 
 alter table clinics add constraint fk_clinics_creator_1 foreign key (creator_id) references users (id) on delete restrict on update restrict;
 create index ix_clinics_creator_1 on clinics (creator_id);
@@ -249,23 +230,5 @@ drop table if exists work_days;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
-drop sequence if exists clinics_seq;
-
-drop sequence if exists groups_seq;
-
-drop sequence if exists patients_seq;
-
-drop sequence if exists protected_pages_seq;
-
-drop sequence if exists receptions_seq;
-
-drop sequence if exists schedule_templates_seq;
-
 drop sequence if exists sessions_seq;
-
-drop sequence if exists time_list_seq;
-
-drop sequence if exists users_seq;
-
-drop sequence if exists work_days_seq;
 

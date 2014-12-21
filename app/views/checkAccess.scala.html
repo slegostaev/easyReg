@@ -1,0 +1,5 @@
+@(methodName: String = null)(content: => Html)
+
+@if(com.legossoft.security.core.CheckAccessHandler.hasAccess(methodName)) {
+	@content
+}

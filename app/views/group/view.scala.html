@@ -1,0 +1,25 @@
+@(group : Group)
+<div>
+	<label>Название группы: </label>
+	<span>@group.name</span>
+	<br>
+	@checkAccess("controllers.GroupsController.edit") {
+		<a href="@routes.GroupsController.edit(group.id)">Редактировать</a>
+	}
+	<br>
+	@checkAccess("controllers.GroupsController.index") {
+		<a href="@routes.GroupsController.index">Вернуться к списку групп</a>
+	}
+</div>
+
+<div>
+	@if(group.id != null) {
+		@checkAccess("controllers.GroupsController.usersGroup") {
+			<a href="@routes.GroupsController.usersGroup(group.id)">Пользователи группы</a><br>
+		}
+
+		@checkAccess("controllers.GroupsController.permissionsGroup") {
+			<a href="@routes.GroupsController.permissionsGroup(group.id)">Разрешения</a>
+		}
+	}
+</div>

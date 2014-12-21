@@ -36,7 +36,7 @@ public class Global extends GlobalSettings {
 			} else {
 				Set<Method> protectedMethods = SecurityUtil.getProtectedMethods();
 				for (Method method : protectedMethods) {
-					ProtectedPage protectedPage = new ProtectedPage(method.getDeclaringClass().getCanonicalName(), method.getName(), method.getAnnotation(Access.class).description());
+					ProtectedPage protectedPage = new ProtectedPage(method.getDeclaringClass().getCanonicalName() + "." + method.getName(), method.getAnnotation(Access.class).description());
 					protectedPage.groups.add(adminsGroup);
 					protectedPages.add(protectedPage);
 				}

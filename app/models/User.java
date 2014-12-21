@@ -68,4 +68,5 @@ public class User extends BaseUser {
     public static User authenticate(String login, String password) {
 		return Ebean.find(User.class).where().eq("login", login.toLowerCase()).eq("password", password).findUnique();
 	}
+    
 }
