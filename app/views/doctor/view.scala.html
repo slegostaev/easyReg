@@ -1,0 +1,18 @@
+@(doctor : Doctor)
+
+<div>
+	<label>Доктор: </label>
+	<span>@doctor.fullname</span>
+	<br>
+	@checkAccess("controllers.DoctorsController.edit") {
+		<a href="@routes.DoctorsController.edit(doctor.id)">Редактировать</a>
+	}
+	<br>
+	@checkAccess("controllers.DoctorsController.index") {
+		<a href="@routes.DoctorsController.index">Вернуться к списку докторов</a>
+	}
+</div>
+
+<div>
+	
+</div>

@@ -1,0 +1,21 @@
+@(doctorForm : Form[Doctor])
+
+@checkAccess("controllers.DoctorsController.index") {
+	<a href="@routes.DoctorsController.index">Вернуться к списку докторов</a>
+}
+
+<form action="@routes.DoctorsController.save" method="post">
+	@if(doctorForm("id").value != null) {
+		<input type="hidden" id="id" name="id" value="@doctorForm("id").value">
+	}
+	<label for="surname">Фамилия:</label><input type="text" id="surname" name="surname" value="@doctorForm("surname").value" required><br>
+	<label for="firstname">Имя:</label><input type="text" id="firstname" name="firstname" value="@doctorForm("firstname").value" required><br>
+	<label for="patronymic">Отчество:</label><input type="text" id="patronymic" name="patronymic" value="@doctorForm("patronymic").value" required><br>
+	<label for="birthday">Дата рождения:</label><input type="date" id="birthday" name="birthday" value="@doctorForm("birthday").value" required><br>
+	<label for="mobile_phone_number">Телефон мобильный:</label><input type="tel" pattern="(\+?\d[- .]*){7,13}" 
+		name="phones.mobile" id="mobile_phone_number" value="@doctorForm("mobile_phone_number").value" required><br>
+	<label for="home_phone_number">Телефон домашний:</label><input type="tel" pattern="(\+?\d[- .]*){7,13}" 
+		name="phones.home" id="home_phone_number" value="@doctorForm("home_phone_number").value" required><br>
+		
+	<button type="submit">Сохранить</button>
+</form>

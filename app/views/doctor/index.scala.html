@@ -1,0 +1,20 @@
+@(doctors : List[Doctor])
+<div>
+	@checkAccess("controllers.DoctorsController.create") {
+		<a href="@routes.DoctorsController.create">Добавить нового доктора</a>
+	}
+</div>
+<ul>
+	@if(doctors != null) {
+		@for(doctor <- doctors) {
+			<li>
+				@doctor.fullname
+				@checkAccess("controllers.DoctorsController.view") {
+					<a href="@routes.DoctorsController.view(doctor.id)">
+						Детали
+					</a>
+				}
+			</li>
+		}
+	}
+</ul>
