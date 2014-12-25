@@ -51,6 +51,14 @@
     flex-grow: 0;
 }
 
-.b-layout__content_hcentered {
+.b-layout__content_align_center {
     align-items: center;
+}
+
+.b-layout__content_flow_row {
+    flex-flow: row nowrap;
+}
+
+.b-layout__content_flow_column {
+    flex-flow: column wrap;
 }

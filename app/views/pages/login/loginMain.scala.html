@@ -1,7 +1,7 @@
 @(loginForm : Form[Application.LoginForm])
 
 @main(pages.login.loginStyles())(pages.login.loginJsLibs())(pages.login.loginHeader())(pages.login.loginFooter()) {
-    <div class='b-layout__content b-layout__content_hcentered'>
+    <div class='b-layout__content b-layout__content_align_center'>
         <div class="b-logo"></div>
         <form class='b-auth-form b-form b-form_stretch'action='@routes.Application.auth' method='post'>
             <fieldset class='b-form__content'>

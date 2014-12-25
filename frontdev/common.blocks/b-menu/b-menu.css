@@ -3,6 +3,8 @@
     flex-flow: row wrap;
     align-content: flex-start;
     border-right: 1px solid #c5daf2;
+    flex: 1 0 250px;
+    background: #e7f4ff;
 }
 
 /*

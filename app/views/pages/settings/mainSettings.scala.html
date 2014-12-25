@@ -1,8 +1,8 @@
 @(activeItem: String)(contentSettings: Html)
 
 @main(pages.settings.index.indexSettingsStyles())(pages.settings.index.indexJsLibs())(pages.settings.index.indexSettingsHeader())(pages.settings.index.indexSettingsFooter()) {
-    <div class='b-settings b-layout__content'>
-        <nav class='b-menu b-settings__menu b-layout__content-left-side'>
+    <div class='b-layout__content b-layout__content_flow_row'>
+        <nav class='b-menu b-list'>
 
             <a class='b-menu__link @if(activeItem == "application") { b-menu__link_active }' href='@routes.SettingsController.index'>Настройки приложения</a>
 
@@ -19,7 +19,7 @@
             }
 
         </nav>
-        <div class='b-settings__content b-layout__content-right-side'>
+        <div class='b-content'>
             @contentSettings
         </div>
     </div>

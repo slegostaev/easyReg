@@ -1,0 +1,26 @@
+.b-content {
+    flex: 1 1 100%;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: stretch;
+}
+
+/*
+    Elements
+*/
+
+.b-content__title {
+    margin: 0;
+    padding: 0 10px;
+    border-bottom: 1px dashed #e6e9ec;
+    color: #2369b8;
+    font-size: 20px;
+    line-height: 2.5;
+    flex-shrink: 0;
+}
+
+.b-content__wrapper {
+    overflow-y: auto;
+}
