@@ -11,6 +11,7 @@
 
 .b-list__item {
     margin: 0;
+    display: block;
 }
 
 .b-list__item_type_card {
@@ -25,5 +26,6 @@
 .b-list_type_card {
     flex-flow: row wrap;
     padding: 10px 10px 0 10px;
+    align-items: flex-start;
 }
 

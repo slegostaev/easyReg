@@ -1,10 +1,15 @@
 .b-button {
-    padding: 5px;
+    padding: 5px 10px;
     margin: 0;
+    text-decoration: none;
 }
 
 .b-button:hover {
     cursor: pointer;
+}
+
+.b-button .fa {
+    margin: 0 10px 0 0;
 }
 
 /*
@@ -57,6 +62,29 @@
 }
 
 .theme-dent .b-button_type_primary:active {
+    background: linear-gradient(to bottom, #4686d2 0%, #1d74d2 100%);
+    box-shadow: inset rgba(0, 0, 0, 0.3) 0px 2px 5px;
+}
+
+
+
+.theme-dent .b-button_type_success {
+    border: 1px solid #3075a9;
+    background: linear-gradient(to bottom, #499bea 0%, #207ce5 100%);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
+    color: #ebeffa;
+}
+
+.theme-dent .b-button_type_success:hover {
+    background: linear-gradient(to bottom, #4aa5f5 0%, #2088f5 100%);
+}
+
+.theme-dent .b-button_type_success:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(26, 136, 218, 1);
+}
+
+.theme-dent .b-button_type_success:active {
     background: linear-gradient(to bottom, #4686d2 0%, #1d74d2 100%);
     box-shadow: inset rgba(0, 0, 0, 0.3) 0px 2px 5px;
 }

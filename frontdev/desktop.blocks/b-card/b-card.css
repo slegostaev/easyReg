@@ -1,0 +1,37 @@
+.b-card {
+    display: flex;
+    flex-flow: row wrap;
+    overflow: hidden;
+    background: #e7f4ff;
+    box-shadow: #A6C3DB 0px 1px 1px;
+}
+
+/*
+    Elements
+*/
+
+.b-card__header {
+    flex: 1 1 100%;
+    padding: 10px;
+    background: linear-gradient(to bottom,#499BEA 0%,#207CE5 100%);
+    color: #fff;
+}
+.b-card__header .b-link,
+.b-card__header .b-link:active {
+    color: #fff;
+}
+
+.b-card__header .b-link:hover,
+.b-card__header .b-link:focus {
+    color: #e9f5ff;
+}
+
+
+.b-card__body {
+    flex: 1 1 100%;
+}
+
+.b-card__footer {
+    flex: 1 1 100%;
+    padding: 10px;
+}

@@ -10,15 +10,20 @@
 /*
     Elements
 */
-
-.b-content__title {
+.b-content__header {
+    flex-shrink: 0;
     margin: 0;
     padding: 0 10px;
     border-bottom: 1px dashed #e6e9ec;
+}
+
+.b-content__title {
+    display: inline-block;
     color: #2369b8;
     font-size: 20px;
     line-height: 2.5;
-    flex-shrink: 0;
+    margin: 0;
+
 }
 
 .b-content__wrapper {
