@@ -1,0 +1,47 @@
+@(doctorForm : Form[Doctor])
+
+@pages.settings.mainSettings("doctors") {
+<header class='b-content__header'>
+    <div>
+        <a class="b-button b-button_type_primary" href="@routes.DoctorsController.index">
+            <i class="b-button__icon fa fa-caret-left"></i>
+            <span class="b-button__text">Назад</span>
+        </a>
+        <h1 class='b-content__title'>Добавление доктора</h1>
+    </div>
+</header>
+<div class='b-content__wrapper'>
+    <form class='b-form b-form_stretch' action='@routes.DoctorsController.save' method='post'>
+        @if(doctorForm("id").value != null) {
+            <input type='hidden' id='id' name='id' value='@doctorForm("id").value'>
+        }
+        <div class='b-form__controls'>
+            <div class='b-form__control'>
+                <label for='surname'>Фамилия:</label>
+                <input class='b-input  b-input_size_xl' type='text' id='surname' name='surname' value='@doctorForm("surname").value' required>
+            </div>
+            <div class='b-form__control'>
+                <label for='firstname'>Имя:</label>
+                <input class='b-input  b-input_size_xl' type='text' id='firstname' name='firstname' value='@doctorForm("firstname").value' required>
+            </div>
+            <div class='b-form__control'>
+                <label for='patronymic'>Отчество:</label>
+                <input class='b-input  b-input_size_xl' type='text' id='patronymic' name='patronymic' value='@doctorForm("patronymic").value' required>
+            </div>
+            <div class='b-form__control'>
+                <label for='birthday'>Дата рождения:</label>
+                <input class='b-input  b-input_size_xl' type='date' id='birthday' name='birthday' value='@doctorForm("birthday").value' required>
+            </div>
+            <div class='b-form__control'>
+                <label for='mobile_phone_number'>Телефон мобильный:</label>
+                <input class='b-input  b-input_size_xl' type='tel' pattern='(\+?\d[- .]*){7,13}' id='mobile_phone_number' name='phones.mobile' value='@doctorForm("mobile_phone_number").value' required>
+            </div>
+            <div class='b-form__control'>
+                <label for='home_phone_number'>Телефон домашний:</label>
+                <input class='b-input  b-input_size_xl' type='tel' pattern='(\+?\d[- .]*){7,13}' id='home_phone_number' name='phones.home' value='@doctorForm("home_phone_number").value' required>
+            </div>
+            <div class='b-form__control'><button class="b-button b-button_size_xl b-button_type_primary" type="submit">Сохранить</button></div>
+        </div>
+    </form>
+</div>
+}

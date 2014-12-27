@@ -13,7 +13,7 @@
 .b-content__header {
     flex-shrink: 0;
     margin: 0;
-    padding: 10px;
+    padding: 10px 0;
     border-bottom: 1px dashed #e6e9ec;
     display: flex;
     justify-content: space-between;
@@ -24,7 +24,8 @@
     display: inline-block;
     color: #2369b8;
     font-size: 20px;
-    margin: 0;
+    margin: 0 10px;
+    vertical-align: middle;
 
 }
 

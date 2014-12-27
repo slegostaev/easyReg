@@ -69,7 +69,7 @@ public class DoctorsController extends Controller {
 	
 	@Access(description = "Создание докторов")
 	public static Result create() {
-    	return ok(views.html.doctor.create.render(doctorForm));
+    	return ok(views.html.pages.settings.doctors.create.doctorsSettingsMain.render(doctorForm));
     }
 	
 	@Access(description = "Удаление докторов")
