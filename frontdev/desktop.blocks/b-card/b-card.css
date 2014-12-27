@@ -3,18 +3,23 @@
     flex-flow: row wrap;
     overflow: hidden;
     background: #e7f4ff;
-    box-shadow: #A6C3DB 0px 1px 1px;
+    box-shadow: #a6c3db 0px 1px 1px;
+}
+
+.b-card:hover {
+    box-shadow: rgba(41, 130, 224, 0.5) 0 0 10px;
 }
 
 /*
-    Elements
+    elements
 */
 
 .b-card__header {
     flex: 1 1 100%;
     padding: 10px;
-    background: linear-gradient(to bottom,#499BEA 0%,#207CE5 100%);
+    background: linear-gradient(to bottom,#499bea 0%,#207ce5 100%);
     color: #fff;
+    border-bottom: 1px solid #1c61b8;
 }
 .b-card__header .b-link,
 .b-card__header .b-link:active {

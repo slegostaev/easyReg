@@ -4,49 +4,37 @@
     <header class="b-content__header">
         <h1 class="b-content__title">Список докторов</h1>
         @checkAccess("controllers.DoctorsController.create") {
-            <a class="b-button b-button_type_success" href="@routes.DoctorsController.create"><i class="fa fa-plus"></i>Добавить доктора</a>
+            <a class="b-button b-button_type_success" href="@routes.DoctorsController.create">
+                <i class="b-button__icon fa fa-plus"></i>
+                <span class="b-button__text">Добавить доктора</span>
+            </a>
         }
     </header>
     <div class="b-content__wrapper">
         <ul class="b-list b-list_type_card">
             @if(doctors != null) {
                 @for(doctor <- doctors) {
-                    <li class="b-card b-list__item b-list__item_type_card">
+                    <li class="b-person b-card b-list__item b-list__item_type_card">
                         <header class="b-card__header">
-                            @checkAccess("controllers.DoctorsController.view") {
-                                <a class="b-link b-link_icon g-helper g-helper_right" href="@routes.DoctorsController.view(doctor.id)" title="Детали"><i class="fa fa-eye"></i></a>
+                            @checkAccess("controllers.DoctorsController.delete") {
+                                <a class="b-link b-link_icon g-helper g-helper_right" href="@routes.DoctorsController.delete(doctor.id)" title="Детали"><i class="fa fa-close fa-lg"></i></a>
                             }
                         </header>
-                        <div class="b-person b-card__body">
+                        <div class="b-card__body">
                             <div class="b-person__avatar b-person__avatar_rounded">
-                                <img class="b-image" src="https://randomuser.me/api/portraits/men/40.jpg" width="100" height="100" alt=""/>
+                                <!--<img class="b-image" src="https://randomuser.me/api/portraits/men/40.jpg" width="100" height="100" alt=""/>-->
+                                <i class="fa fa-user-md fa-5x"></i>
                             </div>
                             <span class="b-person__name">@doctor.fullname</span>
+                            @checkAccess("controllers.DoctorsController.edit") {
+                                <a class="b-button b-button_stretched b-button_type_primary" href="@routes.DoctorsController.edit(doctor.id)">
+                                    <span class="b-button__text">Редактировать</span>
+                                </a>
+                            }
                         </div>
-                        <footer class="b-card__footer"></footer>
                     </li>
                 }
             }
         </ul>
     </div>
-
-    <!--<div>
-        @checkAccess("controllers.DoctorsController.create") {
-        <a href="@routes.DoctorsController.create">Добавить нового доктора</a>
-        }
-    </div>
-    <ul>
-        @if(doctors != null) {
-            @for(doctor <- doctors) {
-                <li>
-                    @doctor.fullname
-                    @checkAccess("controllers.DoctorsController.view") {
-                    <a href="@routes.DoctorsController.view(doctor.id)">
-                        Детали
-                    </a>
-                    }
-                </li>
-            }
-        }
-    </ul>-->
 }

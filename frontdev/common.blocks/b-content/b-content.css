@@ -13,15 +13,17 @@
 .b-content__header {
     flex-shrink: 0;
     margin: 0;
-    padding: 0 10px;
+    padding: 10px;
     border-bottom: 1px dashed #e6e9ec;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .b-content__title {
     display: inline-block;
     color: #2369b8;
     font-size: 20px;
-    line-height: 2.5;
     margin: 0;
 
 }

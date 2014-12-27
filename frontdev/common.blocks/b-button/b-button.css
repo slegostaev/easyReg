@@ -1,4 +1,5 @@
 .b-button {
+    font-size: 11pt;
     padding: 5px 10px;
     margin: 0;
     text-decoration: none;
@@ -8,26 +9,39 @@
     cursor: pointer;
 }
 
-.b-button .fa {
-    margin: 0 10px 0 0;
+.b-button:active .b-button__icon,
+.b-button:active .b-button__text {
+    top: 1px;
 }
 
 /*
     Elements
 */
 
+.b-button__icon {
+    position: relative;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+.b-button__text {
+    position: relative;
+}
+
 /*
     Modificators
 */
+
+.b-button_stretched {
+    display: block;
+    margin: 10px;
+    text-align: center;
+}
 
 .b-button_size_xl {
     padding: 10px;
     font-size: 12pt;
     line-height: 12pt;
-}
-
-.b-button_size_xl:active {
-    font-size: 11pt;
 }
 
 .b-button_size_xxl {
@@ -50,6 +64,7 @@
     background: linear-gradient(to bottom, #499bea 0%, #207ce5 100%);
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
     color: #ebeffa;
+    text-shadow: #28648e 0px -1px 0px;
 }
 
 .theme-dent .b-button_type_primary:hover {
@@ -69,22 +84,46 @@
 
 
 .theme-dent .b-button_type_success {
-    border: 1px solid #3075a9;
-    background: linear-gradient(to bottom, #499bea 0%, #207ce5 100%);
+    border: 1px solid #28b52f;
+    background: linear-gradient(to bottom,#45e042 0%,#27bb2e 100%);
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
-    color: #ebeffa;
+    color: #fff;
+    text-shadow: #259427 0px -1px 0px;
 }
 
 .theme-dent .b-button_type_success:hover {
-    background: linear-gradient(to bottom, #4aa5f5 0%, #2088f5 100%);
+    background: linear-gradient(to bottom, #49e646 0%, #28c32f 100%);
 }
 
 .theme-dent .b-button_type_success:focus {
     outline: none;
-    box-shadow: 0 0 10px rgba(26, 136, 218, 1);
+    box-shadow: 0 0 10px rgba(40, 181, 47, 0.7);
 }
 
 .theme-dent .b-button_type_success:active {
-    background: linear-gradient(to bottom, #4686d2 0%, #1d74d2 100%);
+    background: linear-gradient(to bottom, #43cd40 0%, #27af2d 100%);
     box-shadow: inset rgba(0, 0, 0, 0.3) 0px 2px 5px;
 }
+
+.theme-dent .b-button_type_danger {
+    border: 1px solid #B52828;
+    background: linear-gradient(to bottom,#e06042 0%,#bb4927 100%);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
+    color: #fff;
+    text-shadow: #942525 0 -1px 0;
+}
+
+.theme-dent .b-button_type_danger:hover {
+    background: linear-gradient(to bottom, #eb6143 0%, #c54d29 100%);
+}
+
+.theme-dent .b-button_type_danger:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(181, 40, 40, 0.7);
+}
+
+.theme-dent .b-button_type_danger:active {
+    background: linear-gradient(to bottom, #cd5438 0%, #a74527 100%);
+    box-shadow: inset rgba(0, 0, 0, 0.3) 0px 2px 5px;
+}
+
