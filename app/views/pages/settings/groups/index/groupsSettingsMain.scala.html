@@ -1,4 +1,40 @@
 @(groups : List[Group])
+
 @pages.settings.mainSettings("groups") {
-<h1 class="b-settings__title">Группы</h1>
+    <header class="b-content__header">
+        <h1 class="b-content__title">Список групп</h1>
+        @checkAccess("controllers.GroupsController.create") {
+            <a class="b-button b-button_type_success" href="@routes.GroupsController.create">
+                <i class="b-button__icon fa fa-plus"></i>
+                <span class="b-button__text">Добавить группу</span>
+            </a>
+        }
+    </header>
+    <div class="b-content__wrapper">
+        <ul class="b-list b-list_type_card">
+            @if(groups != null) {
+                @for(group <- groups) {
+                <li class="b-person b-card b-list__item b-list__item_type_card">
+                    <header class="b-card__header">
+                        @checkAccess("controllers.GroupsController.delete") {
+                        <a class="b-link b-link_icon g-helper g-helper_right" href="@routes.GroupsController.delete(group.id)" title="Удалить"><i class="fa fa-close fa-lg"></i></a>
+                        }
+                    </header>
+                    <div class="b-card__body">
+                        <div class="b-person__avatar b-person__avatar_rounded">
+                            <!--<img class="b-image" src="https://randomuser.me/api/portraits/men/40.jpg" width="100" height="100" alt=""/>-->
+                            <i class="fa fa-user fa-5x"></i>
+                        </div>
+                        <span class="b-person__name">@group.name</span>
+                        @checkAccess("controllers.GroupsController.edit") {
+                        <a class="b-button b-button_stretched b-button_type_primary" href="@routes.GroupsController.edit(group.id)">
+                            <span class="b-button__text">Редактировать</span>
+                        </a>
+                        }
+                    </div>
+                </li>
+                }
+            }
+        </ul>
+    </div>
 }

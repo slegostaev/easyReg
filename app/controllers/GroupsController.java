@@ -30,7 +30,7 @@ public class GroupsController extends Controller {
 	
 	@Access(description = "Создание групп пользователей")
 	public static Result create() {
-		return ok(views.html.group.create.render(groupForm));
+		return ok(views.html.pages.settings.groups.create.groupsSettingsMain.render(groupForm));
 	}
 	
 	public static Result save() {
@@ -48,7 +48,7 @@ public class GroupsController extends Controller {
 			flash("ok", "Группа сохранена успешно");
 		}
 		
-		return ok(views.html.group.edit.render(bindedForm));
+		return ok(views.html.pages.settings.groups.edit.groupsSettingsMain.render(bindedForm));
 	}
 	
 	@Access(description = "Удаление групп пользователей")
@@ -63,7 +63,7 @@ public class GroupsController extends Controller {
 	
 	@Access(description = "Редактирование групп пользователей")
 	public static Result edit(Long id) {
-		return ok(views.html.group.edit.render(groupForm.fill(Group.findById(id, Group.class))));
+		return ok(views.html.pages.settings.groups.edit.groupsSettingsMain.render(groupForm.fill(Group.findById(id, Group.class))));
 	}
 	
 	

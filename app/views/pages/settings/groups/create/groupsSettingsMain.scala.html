@@ -1,0 +1,35 @@
+@(groupForm : Form[Group])
+
+@pages.settings.mainSettings("groups") {
+    <header class='b-content__header'>
+        <div>
+            <a class="b-button b-button_type_primary" href="@routes.GroupsController.index">
+                <i class="b-button__icon fa fa-caret-left"></i>
+                <span class="b-button__text">Назад</span>
+            </a>
+            <h1 class='b-content__title'>
+                @if(request.uri.indexOf("new") != -1) { Добавление группы }
+                @if(request.uri.indexOf("edit") != -1) { Редактирование группы }
+            </h1>
+        </div>
+    </header>
+    <div class='b-content__wrapper'>
+        <form class='b-settings-form b-form b-form_stretch' action='@routes.GroupsController.save' method='post'>
+            @if(groupForm("id").value != null) {
+                <input type='hidden' id='id' name='id' value='@groupForm("id").value'>
+            }
+            <div class='b-form__controls'>
+                <div class='b-form__control'>
+                    <label class='b-label b-label_size_xl' for='name'>Название группы:</label>
+                    <input class='b-input b-input_size_xl' type='text' id='name' name='name' value='@groupForm("name").value' required>
+                </div>
+                <div class='b-form__control'>
+                    <button class="b-button b-button_size_xl b-button_type_primary" type="submit">
+                        @if(request.uri.indexOf("new") != -1) { Добавить }
+                        @if(request.uri.indexOf("edit") != -1) { Сохранить }
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+}
