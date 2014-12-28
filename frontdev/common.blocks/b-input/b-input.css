@@ -1,5 +1,9 @@
 .b-input {
     padding: 5px;
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: relative;
+    display: block;
 }
 
 /*
@@ -17,7 +21,7 @@
 
 .b-input_size_xxl {
     padding: 15px;
-    font-size: 12pt;
+    font-size: 14pt;
 }
 
 /*

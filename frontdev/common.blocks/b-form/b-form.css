@@ -36,13 +36,13 @@
 .b-form_stretch {
     display: flex;
     flex-flow: column;
-    align-content: stretch;
+    align-items: stretch;
 }
 
 .b-form_stretch .b-form__control {
     display: flex;
     flex-flow: column;
-    align-content: stretch;
+    align-items: stretch;
 }
 
 /*

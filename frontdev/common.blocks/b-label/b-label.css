@@ -1,0 +1,22 @@
+.b-label {
+    font-weight: bold;
+    color: #215590;
+}
+
+/*
+    Elements
+*/
+
+/*
+    Modificators
+*/
+
+.b-label_size_xl {
+    padding: 0 0 10px 10px;
+    font-size: 12pt;
+}
+
+.b-label_size_xxl {
+    padding: 0 0 15px 15px;
+    font-size: 14pt;
+}

@@ -31,4 +31,5 @@
 
 .b-content__wrapper {
     overflow-y: auto;
+    flex: 1 100%;
 }
